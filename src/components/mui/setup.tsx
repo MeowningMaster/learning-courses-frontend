@@ -6,12 +6,12 @@ import { NextAppDirEmotionCacheProvider } from 'tss-react/next/appDir'
 import { theme } from './theme'
 
 export const MuiSetup = ({ children }: PropsWithChildren) => {
-    return (
-        <>
-            <CssBaseline />
-            <NextAppDirEmotionCacheProvider options={{ key: 'css' }}>
-                <ThemeProvider theme={theme}>{children}</ThemeProvider>
-            </NextAppDirEmotionCacheProvider>
-        </>
-    )
+  return (
+    <>
+      <CssBaseline />
+      <NextAppDirEmotionCacheProvider options={{ key: 'css' }}>
+        <ThemeProvider theme={theme}>{children}</ThemeProvider>
+      </NextAppDirEmotionCacheProvider>
+    </>
+  )
 }
