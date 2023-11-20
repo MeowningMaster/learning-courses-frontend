@@ -8,9 +8,11 @@ import { theme } from './theme'
 export const MuiSetup = ({ children }: PropsWithChildren) => {
   return (
     <>
-      <CssBaseline />
       <NextAppDirEmotionCacheProvider options={{ key: 'css' }}>
-        <ThemeProvider theme={theme}>{children}</ThemeProvider>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          {children}
+        </ThemeProvider>
       </NextAppDirEmotionCacheProvider>
     </>
   )

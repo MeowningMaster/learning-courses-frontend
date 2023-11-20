@@ -4,7 +4,7 @@ import './globals.css'
 
 export const metadata: Metadata = {
   title: 'Learning courses',
-  description: 'App for learning courses',
+  description: 'Expand your knowledge',
 }
 
 export default function RootLayout({
