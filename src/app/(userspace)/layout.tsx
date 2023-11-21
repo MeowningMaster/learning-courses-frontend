@@ -23,7 +23,7 @@ import {
 } from '@mui/material'
 import React from 'react'
 
-const drawerWidth = 240
+const drawerWidth = 200
 
 function EasyListItem({ text, icon }: { text: string; icon: React.ReactNode }) {
   return (
