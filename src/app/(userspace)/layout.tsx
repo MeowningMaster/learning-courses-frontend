@@ -51,10 +51,10 @@ export default function UserspaceLayout({
     <div>
       <Toolbar />
       <List>
-        <Divider textAlign="left">Курси</Divider>
-        <EasyListItem text={'Каталог'} icon={<TravelExplore />} />
-        <EasyListItem text={'Активні'} icon={<Subscriptions />} />
-        <EasyListItem text={'Шаблони'} icon={<SnippetFolder />} />
+        <Divider textAlign="left">Courses</Divider>
+        <EasyListItem text={'Catalog'} icon={<TravelExplore />} />
+        <EasyListItem text={'Ongoing'} icon={<Subscriptions />} />
+        <EasyListItem text={'Templates'} icon={<SnippetFolder />} />
       </List>
     </div>
   )

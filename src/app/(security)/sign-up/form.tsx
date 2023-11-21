@@ -22,21 +22,21 @@ export function SignUpForm(props: BoxProps) {
       <div className="flex gap-4">
         <TextField
           name="firstName"
-          label="Ім'я"
+          label="Name"
           required
           autoComplete="given-name"
         />
         <TextField
           name="lastName"
-          label="Прізвище"
+          label="Surname"
           required
           autoComplete="family-name"
         />
       </div>
-      <TextField name="login" label="Пошта" type="email" required />
-      <TextField name="password" label="Пароль" type="password" required />
+      <TextField name="login" label="Email" type="email" required />
+      <TextField name="password" label="Password" type="password" required />
       <Button type="submit" variant="contained">
-        Зареєструватися
+        Sign up
       </Button>
     </form>
   )

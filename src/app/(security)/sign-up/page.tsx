@@ -8,11 +8,9 @@ export default function Login() {
       <CenterScreen>
         <Card className="m-8 p-8">
           <Typography variant="h4">Learning Courses</Typography>
-          <Typography variant="subtitle1">
-            Створіть новий обліковий запис
-          </Typography>
+          <Typography variant="subtitle1">Create a new account</Typography>
           <SignUpForm className="my-4" />
-          <Link href="/sign-in">Вже маєте акаунт? Авторизуйтесь</Link>
+          <Link href="/sign-in">Already have an account? Log in</Link>
         </Card>
       </CenterScreen>
     </main>
