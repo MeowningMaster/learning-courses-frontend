@@ -10,4 +10,4 @@ export const schema = {
   }),
 } satisfies ApiSchema
 
-export const call = Api('/users/user', schema)
+export const call = Api('/users/user', schema, { method: 'GET' })

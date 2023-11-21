@@ -9,7 +9,7 @@ export const schema = {
     lastName: z.string(),
   }),
   reply: z.object({
-    id: z.string(),
+    id: z.number(),
   }),
 } satisfies ApiSchema
 
