@@ -1,4 +1,4 @@
-import { schema as signInSchema, signIn } from '@/api/security/sign-in'
+import { security } from '@/api'
 import { BoxProps, Button, TextField } from '@mui/material'
 import { cookies } from 'next/headers'
 
@@ -6,10 +6,9 @@ async function submit(data: FormData) {
   'use server'
 
   const dataObject = Object.fromEntries(data.entries())
-  const crendentials = signInSchema.body.parse(dataObject)
-  console.log(crendentials)
+  const crendentials = security.signIn.schema.body.parse(dataObject)
 
-  const { token } = await signIn(crendentials)
+  const { token } = await security.signIn.call({ body: crendentials })
 
   cookies().set('token', token)
 }
