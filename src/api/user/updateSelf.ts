@@ -3,6 +3,11 @@ import {Api, ApiSchema} from '../fetcher'
 import {userType} from "@/api/commonType";
 
 export const schema = {
+  body: z.object({
+    login: z.string().email(),
+    firstName: z.string(),
+    lastName: z.string(),
+  }),
   params: z.object({
     userId: z.number(),
   }),
@@ -15,4 +20,4 @@ export const schema = {
   }),
 } satisfies ApiSchema
 
-export const call = Api('/users/user', schema, {method: 'GET'})
+export const call = Api('/self', schema, {method: 'GET'})
