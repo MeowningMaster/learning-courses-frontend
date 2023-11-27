@@ -20,4 +20,4 @@ export const schema = {
   }),
 } satisfies ApiSchema
 
-export const call = Api('/self', schema, {method: 'GET'})
+export const call = Api('/self', schema, {method: 'PUT'})
