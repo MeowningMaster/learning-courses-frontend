@@ -1,0 +1,8 @@
+export * as get from './get'
+export * as getAll from './getAll'
+export * as getChaptersInCourseTemplate from './getChaptersInCourseTemplate'
+export * as getCourseTemplateOwner from './getCourseTemplateOwner'
+export * as getLessonsInCourseTemplate from './getLessonsInCourseTemplate'
+export * as save from './save'
+export * as update from './update'
+export * as delete_ from './delete'
