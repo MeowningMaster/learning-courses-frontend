@@ -17,15 +17,24 @@ import {
   ListItemText,
   Toolbar,
 } from '@mui/material'
+import { redirect, useRouter } from 'next/navigation'
 import React from 'react'
 import LayoutToolbar from './toolbar'
 
 const drawerWidth = 200
 
-function EasyListItem({ text, icon }: { text: string; icon: React.ReactNode }) {
+function EasyListItem({
+  text,
+  icon,
+  onClick,
+}: {
+  text: string
+  icon: React.ReactNode
+  onClick?: () => void
+}) {
   return (
     <ListItem key={text} disablePadding>
-      <ListItemButton>
+      <ListItemButton onClick={onClick}>
         <ListItemIcon>{icon}</ListItemIcon>
         <ListItemText primary={text} />
       </ListItemButton>
@@ -44,12 +53,18 @@ export default function UserspaceLayout({
     setMobileOpen(!mobileOpen)
   }
 
+  const router = useRouter()
+
   const drawer = (
     <div>
       <Toolbar />
       <List>
         <Divider textAlign="left">Courses</Divider>
-        <EasyListItem text={'Catalog'} icon={<TravelExplore />} />
+        <EasyListItem
+          text={'Catalog'}
+          icon={<TravelExplore />}
+          onClick={() => router.push('/')}
+        />
         <EasyListItem text={'Ongoing'} icon={<Subscriptions />} />
         <EasyListItem text={'Templates'} icon={<SnippetFolder />} />
       </List>

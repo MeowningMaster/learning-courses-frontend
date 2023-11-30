@@ -1,19 +1,17 @@
-'use server'
-
 import { course } from '@/api'
-import { CourseList } from '@/components/course/list'
+import { CatalogCourseList } from '@/components/course/list'
 import { Suspense } from 'react'
 
-async function Catalog() {
+async function Context() {
   const courses = await course.getAll.call()
-  return <CourseList list={courses} />
+  return <CatalogCourseList list={courses} />
 }
 
-export default async function CoursesCatalog() {
+export default function CoursesCatalog() {
   return (
     <>
       <Suspense>
-        <Catalog />
+        <Context />
       </Suspense>
     </>
   )
