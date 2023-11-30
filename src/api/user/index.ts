@@ -5,4 +5,3 @@ export * as delete_ from './delete'
 export * as update from './update'
 export * as updateSelf from './updateSelf'
 export * as create from './create'
-

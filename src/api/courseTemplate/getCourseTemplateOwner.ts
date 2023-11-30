@@ -1,6 +1,6 @@
+import { userType } from '@/api/commonType'
 import { z } from 'zod'
 import { Api, ApiSchema } from '../fetcher'
-import {userType} from "@/api/commonType";
 
 export const schema = {
   params: z.object({
@@ -15,4 +15,6 @@ export const schema = {
   }),
 } satisfies ApiSchema
 
-export const call = Api('/templates/courses/course/users/owner', schema, { method: 'GET' })
+export const call = Api('/templates/courses/course/users/owner', schema, {
+  method: 'GET',
+})

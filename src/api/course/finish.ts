@@ -1,9 +1,9 @@
-import {z} from "zod";
-import {Api, ApiSchema} from "@/api/fetcher";
+import { Api, ApiSchema } from '@/api/fetcher'
+import { z } from 'zod'
 
 export const schema = {
   params: z.object({
     courseId: z.number(),
   }),
 } satisfies ApiSchema
-export const call = Api('/courses/course/finish', schema, {method: 'PUT'})
+export const call = Api('/courses/course/finish', schema, { method: 'PUT' })

@@ -1,6 +1,5 @@
-import {z} from 'zod'
-import {Api, ApiSchema} from '../fetcher'
-
+import { z } from 'zod'
+import { Api, ApiSchema } from '../fetcher'
 
 export const schema = {
   params: z.object({
@@ -18,4 +17,4 @@ export const schema = {
   }),
 } satisfies ApiSchema
 
-export const call = Api('/templates/lessons/lesson', schema, {method: 'GET'})
+export const call = Api('/templates/lessons/lesson', schema, { method: 'GET' })

@@ -1,7 +1,6 @@
+import { userType } from '@/api/commonType'
 import { z } from 'zod'
 import { Api, ApiSchema } from '../fetcher'
-import {userType} from "@/api/commonType";
-
 
 export const schema = {
   body: z.object({

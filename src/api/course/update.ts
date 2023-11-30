@@ -1,5 +1,5 @@
-import {z} from "zod";
-import {Api, ApiSchema} from "@/api/fetcher";
+import { Api, ApiSchema } from '@/api/fetcher'
+import { z } from 'zod'
 
 export const schema = {
   body: z.object({
@@ -17,6 +17,6 @@ export const schema = {
     title: z.string(),
     description: z.string(),
     isFinished: z.boolean(),
-  })
+  }),
 } satisfies ApiSchema
-export const call = Api('/courses/course', schema, {method: 'PUT'})
+export const call = Api('/courses/course', schema, { method: 'PUT' })

@@ -1,6 +1,6 @@
-import {z} from 'zod'
-import {Api, ApiSchema} from '../fetcher'
-import {userType} from "@/api/commonType";
+import { userType } from '@/api/commonType'
+import { z } from 'zod'
+import { Api, ApiSchema } from '../fetcher'
 
 export const schema = {
   body: z.object({
@@ -8,7 +8,7 @@ export const schema = {
     login: z.string().email(),
     firstName: z.string(),
     lastName: z.string(),
-    role: userType
+    role: userType,
   }),
   params: z.object({
     userId: z.number(),
@@ -18,8 +18,8 @@ export const schema = {
     login: z.string().email(),
     firstName: z.string(),
     lastName: z.string(),
-    role: userType
+    role: userType,
   }),
 } satisfies ApiSchema
 
-export const call = Api('/users', schema, {method: 'POST'})
+export const call = Api('/users', schema, { method: 'POST' })

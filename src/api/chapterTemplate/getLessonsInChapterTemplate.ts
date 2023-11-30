@@ -1,5 +1,5 @@
-import {z} from 'zod'
-import {Api, ApiSchema} from '../fetcher'
+import { z } from 'zod'
+import { Api, ApiSchema } from '../fetcher'
 
 // TODO: replay
 export const schema = {
@@ -9,4 +9,6 @@ export const schema = {
   reply: z.object({}),
 } satisfies ApiSchema
 
-export const call = Api('/templates/chapters/chapter/lessons', schema, {method: 'GET'})
+export const call = Api('/templates/chapters/chapter/lessons', schema, {
+  method: 'GET',
+})
