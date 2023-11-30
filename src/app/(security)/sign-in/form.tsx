@@ -1,6 +1,6 @@
 import { security } from '@/api'
+import { auth } from '@/utilities/auth'
 import { BoxProps, Button, TextField } from '@mui/material'
-import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 
 async function submit(data: FormData) {
@@ -9,9 +9,8 @@ async function submit(data: FormData) {
   const dataObject = Object.fromEntries(data.entries())
   const crendentials = security.signIn.schema.body.parse(dataObject)
 
-  const { token } = await security.signIn.call({ body: crendentials })
-
-  cookies().set('token', token)
+  const authData = await security.signIn.call({ body: crendentials })
+  await auth.set(authData)
   redirect('/')
 }
 

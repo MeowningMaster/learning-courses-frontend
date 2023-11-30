@@ -1,19 +1,22 @@
 'use client'
 
+import { auth } from '@/utilities/auth'
+import { cookies } from '@/utilities/cookies'
 import { Person } from '@mui/icons-material'
 import { Menu } from '@mui/icons-material'
 import { Avatar, IconButton, Toolbar, Tooltip, Typography } from '@mui/material'
-import cookies from 'js-cookie'
 import { useRouter } from 'next/navigation'
 
-export default function LayoutToolbar({
+export default async function LayoutToolbar({
   handleDrawerToggle,
 }: { handleDrawerToggle: () => void }) {
   const router = useRouter()
-  function logout() {
-    cookies.remove('token')
+  async function logout() {
+    await cookies.remove('token')
     router.push('/sign-in')
   }
+
+  const { login } = await auth.getOrThrow()
 
   return (
     <Toolbar className="justify-between">
@@ -29,7 +32,7 @@ export default function LayoutToolbar({
       <Typography variant="h6" noWrap component="div">
         Learning Courses
       </Typography>
-      <Tooltip title="Logout">
+      <Tooltip title={login}>
         <IconButton onClick={logout}>
           <Avatar>
             <Person />

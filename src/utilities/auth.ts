@@ -1,0 +1,26 @@
+import { signIn } from '@/api/security'
+import { z } from 'zod'
+import { cookies } from './cookies'
+
+type AuthData = z.infer<typeof signIn.schema.reply>
+
+const cookieName = 'auth'
+
+export const auth = {
+  async set(data: AuthData) {
+    await cookies.set(cookieName, JSON.stringify(data))
+  },
+  async get(): Promise<AuthData | undefined> {
+    const data = await cookies.get(cookieName)
+    if (!data) return undefined
+    return JSON.parse(data)
+  },
+  async getOrThrow(): Promise<AuthData> {
+    const data = await this.get()
+    if (!data) throw new Error('No auth data found')
+    return data
+  },
+  async remove() {
+    await cookies.remove(cookieName)
+  },
+}

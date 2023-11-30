@@ -1,3 +1,4 @@
+import { auth } from '@/utilities/auth'
 import { env } from '@/utilities/env'
 import { Prettify } from '@/utilities/types/prettify'
 import { z } from 'zod'
@@ -42,11 +43,16 @@ export async function fetchApi<
     }
   }
 
+  const headers: [string, string][] = [['Content-Type', 'application/json']]
+
+  const authData = await auth.get()
+  if (authData) {
+    headers.push(['Authorization', `Bearer ${authData.token}`])
+  }
+
   const reply = await fetch(url, {
     method,
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers,
     body: body && JSON.stringify(body),
   })
 
@@ -67,8 +73,10 @@ export function Api<
   schema: ApiSchema<Body, Params, Reply> = {},
   options: Prettify<Omit<ApiOptions<Body, Params>, 'body' | 'params'>> = {},
 ) {
-  return async (localOptions: {
-    body?: z.infer<Body>
-    params?: z.infer<Params>
-  }) => await fetchApi(path, schema, { ...options, ...localOptions })
+  return async (
+    localOptions: {
+      body?: z.infer<Body>
+      params?: z.infer<Params>
+    } = {},
+  ) => await fetchApi(path, schema, { ...options, ...localOptions })
 }
