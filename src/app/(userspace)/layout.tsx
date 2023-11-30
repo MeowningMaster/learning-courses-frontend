@@ -1,15 +1,17 @@
 'use client'
 
 import {
-  LocalLibrary,
   Menu,
+  Person,
   SnippetFolder,
   Subscriptions,
   TravelExplore,
 } from '@mui/icons-material'
 import {
   AppBar,
+  Avatar,
   Box,
+  Button,
   Divider,
   Drawer,
   IconButton,
@@ -22,6 +24,7 @@ import {
   Typography,
 } from '@mui/material'
 import React from 'react'
+import LayoutToolbar from './toolbar'
 
 const drawerWidth = 200
 
@@ -68,20 +71,7 @@ export default function UserspaceLayout({
           ml: { sm: `${drawerWidth}px` },
         }}
       >
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: 'none' } }}
-          >
-            <Menu />
-          </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            Learning Courses
-          </Typography>
-        </Toolbar>
+        <LayoutToolbar handleDrawerToggle={handleDrawerToggle} />
       </AppBar>
       <Box
         component="nav"
