@@ -1,22 +1,17 @@
-import { z } from 'zod'
-import { Api, ApiSchema } from '../fetcher'
+import {z} from "zod";
+import {Api, ApiSchema} from "@/api/fetcher";
 import {userType} from "@/api/commonType";
 
-
 export const schema = {
-  body: z.object({
-    type: userType,
-  }),
   params: z.object({
-    userId: z.number(),
+    courseId: z.number(),
   }),
   reply: z.object({
     id: z.number(),
     login: z.string().email(),
     firstName: z.string(),
     lastName: z.string(),
-    role: userType,
-  }),
+    role: userType
+  })
 } satisfies ApiSchema
-
-export const call = Api('/users/user/role', schema, { method: 'PUT' })
+export const call = Api('/courses/course/users/owner', schema, {method: 'GET'})

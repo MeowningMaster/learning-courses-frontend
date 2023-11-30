@@ -2,13 +2,9 @@ import { z } from 'zod'
 import { Api, ApiSchema } from '../fetcher'
 import {userType} from "@/api/commonType";
 
-
 export const schema = {
-  body: z.object({
-    type: userType,
-  }),
   params: z.object({
-    userId: z.number(),
+    courseTemplateId: z.number(),
   }),
   reply: z.object({
     id: z.number(),
@@ -19,4 +15,4 @@ export const schema = {
   }),
 } satisfies ApiSchema
 
-export const call = Api('/users/user/role', schema, { method: 'PUT' })
+export const call = Api('/templates/courses/course/users/owner', schema, { method: 'GET' })
