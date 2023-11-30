@@ -2,7 +2,7 @@
 
 import { Person } from '@mui/icons-material'
 import { Menu } from '@mui/icons-material'
-import { Avatar, IconButton, Toolbar, Typography } from '@mui/material'
+import { Avatar, IconButton, Toolbar, Tooltip, Typography } from '@mui/material'
 import cookies from 'js-cookie'
 import { useRouter } from 'next/navigation'
 
@@ -29,11 +29,13 @@ export default function LayoutToolbar({
       <Typography variant="h6" noWrap component="div">
         Learning Courses
       </Typography>
-      <IconButton onClick={logout}>
-        <Avatar>
-          <Person />
-        </Avatar>
-      </IconButton>
+      <Tooltip title="Logout">
+        <IconButton onClick={logout}>
+          <Avatar>
+            <Person />
+          </Avatar>
+        </IconButton>
+      </Tooltip>
     </Toolbar>
   )
 }
