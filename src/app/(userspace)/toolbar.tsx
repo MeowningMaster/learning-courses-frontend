@@ -1,23 +1,17 @@
 'use client'
 
+import { UserType } from '@/api/commonType'
 import { auth } from '@/utilities/auth'
 import { cookies } from '@/utilities/cookies'
 import { Person } from '@mui/icons-material'
 import { Menu } from '@mui/icons-material'
 import { Avatar, IconButton, Toolbar, Tooltip, Typography } from '@mui/material'
+import { deepOrange, deepPurple, grey } from '@mui/material/colors'
 import { useRouter } from 'next/navigation'
 
 export default async function LayoutToolbar({
   handleDrawerToggle,
 }: { handleDrawerToggle: () => void }) {
-  const router = useRouter()
-  async function logout() {
-    await cookies.remove('token')
-    router.push('/sign-in')
-  }
-
-  const { login } = await auth.getOrThrow()
-
   return (
     <Toolbar className="justify-between">
       <IconButton
@@ -32,13 +26,33 @@ export default async function LayoutToolbar({
       <Typography variant="h6" noWrap component="div">
         Learning Courses
       </Typography>
-      <Tooltip title={login}>
-        <IconButton onClick={logout}>
-          <Avatar>
-            <Person />
-          </Avatar>
-        </IconButton>
-      </Tooltip>
+      <PersonAvatar />
     </Toolbar>
+  )
+}
+
+const bgcolorMap: Record<UserType, string> = {
+  ADMIN: deepOrange[500],
+  INSTRUCTOR: deepPurple[500],
+  STUDENT: grey[500],
+}
+
+async function PersonAvatar() {
+  const router = useRouter()
+  async function logout() {
+    await cookies.remove('token')
+    router.push('/sign-in')
+  }
+
+  const { login, role } = await auth.getOrThrow()
+  const bgcolor = bgcolorMap[role]
+  return (
+    <Tooltip title={`Logout ${login}`}>
+      <IconButton onClick={logout}>
+        <Avatar sx={{ bgcolor }}>
+          <Person />
+        </Avatar>
+      </IconButton>
+    </Tooltip>
   )
 }

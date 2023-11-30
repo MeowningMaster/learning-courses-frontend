@@ -1,27 +1,21 @@
 'use client'
 
 import {
-  Menu,
-  Person,
   SnippetFolder,
   Subscriptions,
   TravelExplore,
 } from '@mui/icons-material'
 import {
   AppBar,
-  Avatar,
   Box,
-  Button,
   Divider,
   Drawer,
-  IconButton,
   List,
   ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
   Toolbar,
-  Typography,
 } from '@mui/material'
 import React from 'react'
 import LayoutToolbar from './toolbar'
