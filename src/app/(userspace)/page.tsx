@@ -1,12 +1,12 @@
 'use server'
 
 import { course } from '@/api'
-import { Typography } from '@mui/material'
+import { CourseList } from '@/components/course/list'
 import { Suspense } from 'react'
 
 async function Catalog() {
   const courses = await course.getAll.call()
-  return <>{JSON.stringify(courses)}</>
+  return <CourseList list={courses} />
 }
 
 export default async function CoursesCatalog() {
