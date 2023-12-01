@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server'
 import { auth } from './utilities/auth'
 
 export async function middleware(request: NextRequest) {
-  if (!(await auth.get())) {
+  if (!auth.get()) {
     return NextResponse.redirect(new URL('/sign-in', request.url))
   }
 }

@@ -1,30 +1,30 @@
 import clientCookies from 'js-cookie'
+import type { cookies as nextCookies } from 'next/headers'
 import { isServerSide } from './context-checker'
 
-async function getServerCookies() {
-  const { cookies: serverCookies } = await import('next/headers')
-  return serverCookies
+let serverCookies: typeof nextCookies
+console.log('isServerSide', isServerSide())
+if (isServerSide()) {
+  const module = await import('next/headers')
+  serverCookies = module.cookies
 }
 
 export const cookies = {
-  async get(key: string): Promise<string | undefined> {
+  get(key: string): string | undefined {
     if (isServerSide()) {
-      const serverCookies = await getServerCookies()
       return serverCookies().get(key)?.value
     }
     return clientCookies.get(key)
   },
-  async set(key: string, value: string) {
+  set(key: string, value: string) {
     if (isServerSide()) {
-      const serverCookies = await getServerCookies()
       serverCookies().set(key, value)
     } else {
       clientCookies.set(key, value)
     }
   },
-  async remove(key: string) {
+  remove(key: string) {
     if (isServerSide()) {
-      const serverCookies = await getServerCookies()
       serverCookies().delete(key)
     } else {
       clientCookies.remove(key)

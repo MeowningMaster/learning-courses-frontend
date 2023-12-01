@@ -7,20 +7,20 @@ type AuthData = z.infer<typeof signIn.schema.reply>
 const cookieName = 'auth'
 
 export const auth = {
-  async set(data: AuthData) {
-    await cookies.set(cookieName, JSON.stringify(data))
+  set(data: AuthData) {
+    cookies.set(cookieName, JSON.stringify(data))
   },
-  async get(): Promise<AuthData | undefined> {
-    const data = await cookies.get(cookieName)
+  get(): AuthData | undefined {
+    const data = cookies.get(cookieName)
     if (!data) return undefined
     return JSON.parse(data)
   },
-  async getOrThrow(): Promise<AuthData> {
-    const data = await this.get()
+  getOrThrow(): AuthData {
+    const data = this.get()
     if (!data) throw new Error('No auth data found')
     return data
   },
-  async remove() {
-    await cookies.remove(cookieName)
+  remove() {
+    cookies.remove(cookieName)
   },
 }

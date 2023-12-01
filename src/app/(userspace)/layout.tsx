@@ -1,5 +1,6 @@
 'use client'
 
+import { getPermissions } from '@/utilities/permissions'
 import {
   SnippetFolder,
   Subscriptions,
@@ -42,7 +43,7 @@ function EasyListItem({
   )
 }
 
-export default function UserspaceLayout({
+export default async function UserspaceLayout({
   children,
 }: {
   children: React.ReactNode
@@ -59,18 +60,26 @@ export default function UserspaceLayout({
     router.push(to)
   }
 
+  const permissions = await getPermissions()
+
   const drawer = (
     <div>
       <Toolbar />
       <List>
         <Divider textAlign="left">Courses</Divider>
-        <EasyListItem
-          text={'Catalog'}
-          icon={<TravelExplore />}
-          onClick={() => navigate('/')}
-        />
-        <EasyListItem text={'Ongoing'} icon={<Subscriptions />} />
-        <EasyListItem text={'Templates'} icon={<SnippetFolder />} />
+        {permissions.navigation.catalog && (
+          <EasyListItem
+            text={'Catalog'}
+            icon={<TravelExplore />}
+            onClick={() => navigate('/')}
+          />
+        )}
+        {permissions.navigation.enrolled && (
+          <EasyListItem text={'Enrolled'} icon={<Subscriptions />} />
+        )}
+        {permissions.navigation.templates && (
+          <EasyListItem text={'Templates'} icon={<SnippetFolder />} />
+        )}
       </List>
     </div>
   )

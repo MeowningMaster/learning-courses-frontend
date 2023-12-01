@@ -6,6 +6,7 @@ import {
   Card,
   CardActionArea,
   CardContent,
+  Chip,
   Typography,
 } from '@mui/material'
 import { redirect, useRouter } from 'next/navigation'
@@ -24,9 +25,15 @@ function CourseCard({
     <Card key={course.id} onClick={() => actions?.click?.(course.id)}>
       <CardActionArea>
         <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {course.title}
-          </Typography>
+          <div className="flex justify-between">
+            <Typography gutterBottom variant="h5" component="div">
+              {course.title}
+            </Typography>
+            {!course.isFinished && (
+              <Chip label="Ongoing" variant="outlined" color="success" />
+            )}
+          </div>
+
           <Typography variant="body2" color="text.secondary">
             {course.description}
           </Typography>
