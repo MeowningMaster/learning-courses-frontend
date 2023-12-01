@@ -18,7 +18,7 @@ import {
   ListItemText,
   Toolbar,
 } from '@mui/material'
-import { redirect, useRouter } from 'next/navigation'
+import { useRouter } from 'next-nprogress-bar'
 import React from 'react'
 import LayoutToolbar from './toolbar'
 

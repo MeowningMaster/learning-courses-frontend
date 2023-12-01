@@ -9,7 +9,7 @@ import {
   Chip,
   Typography,
 } from '@mui/material'
-import { redirect, useRouter } from 'next/navigation'
+import { useRouter } from 'next-nprogress-bar'
 import { z } from 'zod'
 
 type List = z.infer<typeof course.getAll.schema.reply>

@@ -14,7 +14,7 @@ import {
   Typography,
 } from '@mui/material'
 import { deepOrange, deepPurple, grey } from '@mui/material/colors'
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next-nprogress-bar'
 
 export default function LayoutToolbar({
   handleDrawerToggle,

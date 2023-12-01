@@ -1,4 +1,5 @@
 import { MuiSetup } from '@/components/mui/setup'
+import ProgressBar from '@/components/progress-bar'
 import type { Metadata } from 'next'
 import './globals.css'
 
@@ -15,7 +16,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <MuiSetup>{children}</MuiSetup>
+        <ProgressBar>
+          <MuiSetup>{children}</MuiSetup>
+        </ProgressBar>
       </body>
     </html>
   )
