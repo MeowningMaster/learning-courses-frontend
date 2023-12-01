@@ -10,7 +10,7 @@ async function submit(data: FormData) {
   const crendentials = security.signIn.schema.body.parse(dataObject)
 
   const authData = await security.signIn.call({ body: crendentials })
-  await auth.set(authData)
+  auth.set(authData)
   redirect('/')
 }
 

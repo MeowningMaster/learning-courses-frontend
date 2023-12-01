@@ -45,7 +45,7 @@ export async function fetchApi<
 
   const headers: [string, string][] = [['Content-Type', 'application/json']]
 
-  const authData = await auth.get()
+  const authData = auth.get()
   if (authData) {
     headers.push(['Authorization', `Bearer ${authData.token}`])
   }

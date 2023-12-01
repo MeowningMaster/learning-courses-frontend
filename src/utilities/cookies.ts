@@ -3,10 +3,8 @@ import type { cookies as nextCookies } from 'next/headers'
 import { isServerSide } from './context-checker'
 
 let serverCookies: typeof nextCookies
-console.log('isServerSide', isServerSide())
 if (isServerSide()) {
-  const module = await import('next/headers')
-  serverCookies = module.cookies
+  serverCookies = require('next/headers').cookies
 }
 
 export const cookies = {

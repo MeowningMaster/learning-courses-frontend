@@ -43,7 +43,7 @@ function EasyListItem({
   )
 }
 
-export default async function UserspaceLayout({
+export default function UserspaceLayout({
   children,
 }: {
   children: React.ReactNode
@@ -60,7 +60,7 @@ export default async function UserspaceLayout({
     router.push(to)
   }
 
-  const permissions = await getPermissions()
+  const permissions = getPermissions()
 
   const drawer = (
     <div>

@@ -39,21 +39,13 @@ const bgcolorMap: Record<UserType, string> = {
 }
 
 function PersonAvatar() {
-  return (
-    <Suspense fallback={<PersonAvatarPlaceholder />}>
-      <PersonAvatarLoaded />
-    </Suspense>
-  )
-}
-
-async function PersonAvatarLoaded() {
   const router = useRouter()
-  async function logout() {
-    await cookies.remove('token')
+  function logout() {
+    auth.remove()
     router.push('/sign-in')
   }
 
-  const { login, role } = await auth.getOrThrow()
+  const { login, role } = auth.getOrThrow()
   const bgcolor = bgcolorMap[role]
   return (
     <Tooltip title={`Logout ${login}`}>
@@ -63,15 +55,5 @@ async function PersonAvatarLoaded() {
         </Avatar>
       </IconButton>
     </Tooltip>
-  )
-}
-
-function PersonAvatarPlaceholder() {
-  return (
-    <IconButton>
-      <Avatar>
-        <Person />
-      </Avatar>
-    </IconButton>
   )
 }
