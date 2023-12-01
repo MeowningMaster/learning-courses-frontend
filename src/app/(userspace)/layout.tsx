@@ -54,6 +54,10 @@ export default function UserspaceLayout({
   }
 
   const router = useRouter()
+  function navigate(to: string) {
+    if (mobileOpen) setMobileOpen(false)
+    router.push(to)
+  }
 
   const drawer = (
     <div>
@@ -63,7 +67,7 @@ export default function UserspaceLayout({
         <EasyListItem
           text={'Catalog'}
           icon={<TravelExplore />}
-          onClick={() => router.push('/')}
+          onClick={() => navigate('/')}
         />
         <EasyListItem text={'Ongoing'} icon={<Subscriptions />} />
         <EasyListItem text={'Templates'} icon={<SnippetFolder />} />

@@ -8,8 +8,9 @@ import { Menu } from '@mui/icons-material'
 import { Avatar, IconButton, Toolbar, Tooltip, Typography } from '@mui/material'
 import { deepOrange, deepPurple, grey } from '@mui/material/colors'
 import { useRouter } from 'next/navigation'
+import { Suspense } from 'react'
 
-export default async function LayoutToolbar({
+export default function LayoutToolbar({
   handleDrawerToggle,
 }: { handleDrawerToggle: () => void }) {
   return (
@@ -37,7 +38,15 @@ const bgcolorMap: Record<UserType, string> = {
   STUDENT: grey[500],
 }
 
-async function PersonAvatar() {
+function PersonAvatar() {
+  return (
+    <Suspense fallback={<PersonAvatarPlaceholder />}>
+      <PersonAvatarLoaded />
+    </Suspense>
+  )
+}
+
+async function PersonAvatarLoaded() {
   const router = useRouter()
   async function logout() {
     await cookies.remove('token')
@@ -54,5 +63,15 @@ async function PersonAvatar() {
         </Avatar>
       </IconButton>
     </Tooltip>
+  )
+}
+
+function PersonAvatarPlaceholder() {
+  return (
+    <IconButton>
+      <Avatar>
+        <Person />
+      </Avatar>
+    </IconButton>
   )
 }
