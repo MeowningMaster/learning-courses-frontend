@@ -2,13 +2,19 @@
 
 import { UserType } from '@/api/commonType'
 import { auth } from '@/utilities/auth'
-import { cookies } from '@/utilities/cookies'
 import { Person } from '@mui/icons-material'
 import { Menu } from '@mui/icons-material'
-import { Avatar, IconButton, Toolbar, Tooltip, Typography } from '@mui/material'
+import {
+  Avatar,
+  Button,
+  IconButton,
+  Link,
+  Toolbar,
+  Tooltip,
+  Typography,
+} from '@mui/material'
 import { deepOrange, deepPurple, grey } from '@mui/material/colors'
 import { useRouter } from 'next/navigation'
-import { Suspense } from 'react'
 
 export default function LayoutToolbar({
   handleDrawerToggle,
@@ -24,9 +30,12 @@ export default function LayoutToolbar({
       >
         <Menu />
       </IconButton>
-      <Typography variant="h6" noWrap component="div">
-        Learning Courses
-      </Typography>
+      <Link href="/" color="inherit" underline="hover">
+        <Typography variant="h6" noWrap component="div">
+          Learning Courses
+        </Typography>
+      </Link>
+
       <PersonAvatar />
     </Toolbar>
   )
