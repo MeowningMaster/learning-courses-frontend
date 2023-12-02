@@ -1,14 +1,28 @@
 import * as api from '@/api'
 import { CatalogChapterList } from '@/components/chapter/list'
 import { ListFallback } from '@/components/list-fallback'
-import { Chip, Typography } from '@mui/material'
+import {
+  Avatar,
+  Chip,
+  Divider,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  Typography,
+} from '@mui/material'
+import React from 'react'
 import { Suspense } from 'react'
+import { z } from 'zod'
 
 export async function Content(params: { id: number }) {
   const id = Number(params.id)
-  const [course, chapters] = await Promise.all([
+  const [course, chapters, Instructors] = await Promise.all([
     api.course.get.call({ params: { courseId: id } }),
     api.course.getAllChaptersInCourse.call({ params: { courseId: id } }),
+    api.course.getInfoOfUsersInCourse.call({
+      params: { courseId: id, roleType: 'INSTRUCTOR' },
+    }),
   ])
 
   return (
@@ -27,12 +41,47 @@ export async function Content(params: { id: number }) {
 
       <div className="mt-10">
         <Typography gutterBottom variant="h5" component="div">
+          Instructors
+        </Typography>
+      </div>
+
+      <InstructorsList list={Instructors} />
+
+      <div className="mt-10">
+        <Typography gutterBottom variant="h5" component="div">
           Chapters
         </Typography>
       </div>
 
       <CatalogChapterList list={chapters} />
     </>
+  )
+}
+
+type Instructors = z.infer<
+  typeof api.course.getInfoOfUsersInCourse.schema.reply
+>
+
+function InstructorsList({ list }: { list: Instructors }) {
+  return (
+    <List className="w-fit">
+      {list.map(({ user }, index) => {
+        return (
+          <>
+            {index !== 0 && <Divider variant="inset" component="li" />}
+            <ListItem alignItems="flex-start" key={user.id}>
+              <ListItemAvatar>
+                <Avatar />
+              </ListItemAvatar>
+              <ListItemText
+                primary={`${user.firstName} ${user.lastName}`}
+                secondary={user.login}
+              />
+            </ListItem>
+          </>
+        )
+      })}
+    </List>
   )
 }
 

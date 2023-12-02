@@ -21,8 +21,9 @@ type ApiOptions<Body extends z.ZodType, Params extends ParamsSchema> = {
   body?: z.infer<Body>
 }
 
+type ParamsPrimitive = z.ZodString | z.ZodNumber | z.ZodBoolean
 type ParamsSchema = z.ZodObject<{
-  [k: string]: z.ZodString | z.ZodNumber | z.ZodBoolean
+  [k: string]: ParamsPrimitive | z.ZodEnum<[string, ...string[]]>
 }>
 
 export async function fetchApi<
