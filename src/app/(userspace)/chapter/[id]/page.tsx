@@ -1,44 +1,42 @@
 import * as api from '@/api'
-import { CatalogChapterList } from '@/components/chapter/list'
+import { CatalogLessonList } from '@/components/lesson/list'
 import { ListFallback } from '@/components/list-fallback'
 import { Chip, Typography } from '@mui/material'
 import { Suspense } from 'react'
 
 export async function Content(params: { id: number }) {
   const id = Number(params.id)
-  const [course, chapters] = await Promise.all([
-    api.course.get.call({ params: { courseId: id } }),
-    api.course.getAllChaptersInCourse.call({ params: { courseId: id } }),
+  const [chapter, lessons] = await Promise.all([
+    api.chapter.get.call({ params: { chapterId: id } }),
+    api.chapter.getLessons.call({ params: { chapterId: id } }),
   ])
 
   return (
     <>
       <div className="flex gap-4">
         <Typography gutterBottom variant="h5" component="div">
-          {course.title}
+          {chapter.title}
         </Typography>
-        {!course.isFinished && (
-          <Chip label="Ongoing" variant="outlined" color="success" />
+        {chapter.isFinished && (
+          <Chip label="Finished" variant="outlined" color="warning" />
         )}
       </div>
       <Typography variant="body1" color="text.secondary">
-        {course.description}
+        {chapter.description}
       </Typography>
 
       <div className="mt-10">
         <Typography gutterBottom variant="h5" component="div">
-          Chapters
+          Lessons
         </Typography>
       </div>
 
-      <CatalogChapterList list={chapters} />
+      <CatalogLessonList list={lessons} />
     </>
   )
 }
 
-export default async function CoursePage({
-  params,
-}: { params: { id: string } }) {
+export default async function Page({ params }: { params: { id: string } }) {
   return (
     <>
       <Suspense fallback={<ListFallback />}>

@@ -11,30 +11,31 @@ import {
 import { useRouter } from 'next-nprogress-bar'
 import { z } from 'zod'
 
-type List = z.infer<typeof course.getAll.schema.reply>
-export type CourseCardActions = {
-  click?: (id: number) => void
+type List = z.infer<typeof course.getAllLessonsInCourse.schema.reply>
+type Lesson = List[number]
+export type LessonCardActions = {
+  click?: (lesson: Lesson) => void
 }
 
-function CourseCard({
-  course,
+function LessonCard({
+  lesson,
   actions,
-}: { course: List[number]; actions?: CourseCardActions }) {
+}: { lesson: Lesson; actions?: LessonCardActions }) {
   return (
-    <Card key={course.id} onClick={() => actions?.click?.(course.id)}>
+    <Card key={lesson.id} onClick={() => actions?.click?.(lesson)}>
       <CardActionArea>
         <CardContent>
           <div className="flex justify-between">
             <Typography gutterBottom variant="h5" component="div">
-              {course.title}
+              {lesson.title}
             </Typography>
-            {!course.isFinished && (
-              <Chip label="Ongoing" variant="outlined" color="success" />
+            {lesson.isFinished && (
+              <Chip label="Finished" variant="outlined" color="warning" />
             )}
           </div>
 
           <Typography variant="body2" color="text.secondary">
-            {course.description}
+            {lesson.description}
           </Typography>
         </CardContent>
       </CardActionArea>
@@ -42,27 +43,27 @@ function CourseCard({
   )
 }
 
-export function CourseList({
+export function LessonList({
   list,
   actions,
-}: { list: List; actions?: CourseCardActions }) {
+}: { list: List; actions?: LessonCardActions }) {
   return (
     <>
       <div className="flex flex-col gap-4">
-        {list.map((course) => CourseCard({ course, actions }))}
+        {list.map((lesson) => LessonCard({ lesson, actions }))}
       </div>
     </>
   )
 }
 
-export function CatalogCourseList({ list }: { list: List }) {
+export function CatalogLessonList({ list }: { list: List }) {
   const router = useRouter()
   return (
-    <CourseList
+    <LessonList
       list={list}
       actions={{
-        click: (id) => {
-          router.push(`/course/${id}`)
+        click: (lesson) => {
+          router.push(`/lesson/${lesson.id}`)
         },
       }}
     />
