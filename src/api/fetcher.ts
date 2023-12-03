@@ -61,8 +61,11 @@ export async function fetchApi<
     throw new Error(reply.statusText)
   }
 
-  const replyBody = await reply.json()
-  return schema.reply ? schema.reply.parse(replyBody) : replyBody
+  if (schema.reply) {
+    const replyBody = await reply.json()
+    return schema.reply.parse(replyBody)
+  }
+  return undefined
 }
 
 export function Api<
