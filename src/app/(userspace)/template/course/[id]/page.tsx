@@ -1,12 +1,12 @@
 import * as api from '@/api'
 import { TemplateChapterList } from '@/components/chapter/list'
+import { DeleteButton } from '@/components/delete-button'
 import { PageFallback } from '@/components/fallback/page'
 import { Edit } from '@mui/icons-material'
 import { Button, Typography } from '@mui/material'
 import { redirect } from 'next/navigation'
 import React from 'react'
 import { Suspense } from 'react'
-import { DeleteButton } from './delete-button'
 
 async function remove(id: number) {
   'use server'
