@@ -2,7 +2,7 @@ import * as api from '@/api'
 import { DeleteButton } from '@/components/delete-button'
 import { PageFallback } from '@/components/fallback/page'
 import { TemplateLessonList } from '@/components/lesson/list'
-import { Edit } from '@mui/icons-material'
+import { Add, Edit } from '@mui/icons-material'
 import { Button, Typography } from '@mui/material'
 import { redirect } from 'next/navigation'
 import { Suspense } from 'react'
@@ -55,6 +55,15 @@ export async function Content(params: { id: number }) {
       </div>
 
       <TemplateLessonList list={lessons} />
+
+      <Button
+        sx={{ marginTop: '2.5rem' }}
+        variant="outlined"
+        startIcon={<Add />}
+        href={`/template/lesson/${chapter.id}/create`}
+      >
+        New lesson
+      </Button>
     </>
   )
 }

@@ -5,7 +5,7 @@ export const schema = {
   body: z.object({
     title: z.string(),
     description: z.string(),
-    number: z.number(),
+    number: z.optional(z.number()),
     maxMark: z.number(),
     successMark: z.number(),
   }),
