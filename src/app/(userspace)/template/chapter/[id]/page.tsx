@@ -1,14 +1,16 @@
 import * as api from '@/api'
 import { PageFallback } from '@/components/fallback/page'
 import { CatalogLessonList } from '@/components/lesson/list'
-import { Chip, Typography } from '@mui/material'
+import { Typography } from '@mui/material'
 import { Suspense } from 'react'
 
 export async function Content(params: { id: number }) {
   const id = Number(params.id)
   const [chapter, lessons] = await Promise.all([
-    api.chapter.get.call({ params: { chapterId: id } }),
-    api.chapter.getLessons.call({ params: { chapterId: id } }),
+    api.template.chapter.get.call({ params: { chapterTemplateId: id } }),
+    api.template.chapter.getLessonsInChapterTemplate.call({
+      params: { chapterTemplateId: id },
+    }),
   ])
 
   return (
@@ -17,9 +19,6 @@ export async function Content(params: { id: number }) {
         <Typography gutterBottom variant="h5" component="div">
           {chapter.title}
         </Typography>
-        {chapter.isFinished && (
-          <Chip label="Finished" variant="outlined" color="warning" />
-        )}
       </div>
       <Typography variant="body1" color="text.secondary">
         {chapter.description}

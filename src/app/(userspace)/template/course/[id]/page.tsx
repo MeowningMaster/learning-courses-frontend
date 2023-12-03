@@ -1,8 +1,5 @@
 import * as api from '@/api'
-import {
-  CatalogChapterList,
-  TemplateChapterList,
-} from '@/components/chapter/list'
+import { TemplateChapterList } from '@/components/chapter/list'
 import { PageFallback } from '@/components/fallback/page'
 import { Typography } from '@mui/material'
 import React from 'react'
@@ -27,12 +24,6 @@ export async function Content(params: { id: number }) {
       <Typography variant="body1" color="text.secondary">
         {course.description}
       </Typography>
-
-      <div className="mt-10">
-        <Typography gutterBottom variant="h5" component="div">
-          Instructors
-        </Typography>
-      </div>
 
       <div className="mt-10">
         <Typography gutterBottom variant="h5" component="div">

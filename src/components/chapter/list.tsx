@@ -82,7 +82,7 @@ export function TemplateChapterList({ list }: { list: List }) {
       list={list}
       actions={{
         click: (chapter) => {
-          router.push(`/chapter/${chapter.id}`)
+          router.push(`/template/chapter/${chapter.id}`)
         },
       }}
     />
