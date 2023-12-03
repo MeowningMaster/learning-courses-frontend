@@ -1,8 +1,20 @@
 import * as api from '@/api'
+import { DeleteButton } from '@/components/delete-button'
 import { PageFallback } from '@/components/fallback/page'
 import { TemplateLessonList } from '@/components/lesson/list'
-import { Typography } from '@mui/material'
+import { Edit } from '@mui/icons-material'
+import { Button, Typography } from '@mui/material'
+import { redirect } from 'next/navigation'
 import { Suspense } from 'react'
+
+async function remove({
+  id,
+  courseTemplateId,
+}: { id: number; courseTemplateId: number }) {
+  'use server'
+  await api.template.chapter.delete_.call({ params: { chapterTemplateId: id } })
+  redirect(`/template/course${courseTemplateId}`)
+}
 
 export async function Content(params: { id: number }) {
   const id = Number(params.id)
@@ -15,10 +27,22 @@ export async function Content(params: { id: number }) {
 
   return (
     <>
-      <div className="flex gap-4">
+      <div className="flex gap-4 justify-between">
         <Typography gutterBottom variant="h5" component="div">
           {chapter.title}
         </Typography>
+
+        <div className="flex gap-4">
+          <Button
+            variant="outlined"
+            startIcon={<Edit />}
+            href={`/template/chapter/${id}/edit`}
+            className="h-fit"
+          >
+            Edit
+          </Button>
+          <DeleteButton object={chapter} remove={remove} />
+        </div>
       </div>
       <Typography variant="body1" color="text.secondary">
         {chapter.description}

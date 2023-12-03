@@ -11,40 +11,40 @@ async function submit(data: FormData) {
     unknown
   >
   dataObject.id = Number(dataObject.id)
-  const course = template.course.update.schema.body.parse(dataObject)
+  const chapter = template.chapter.update.schema.body.parse(dataObject)
 
-  await template.course.update.call({
-    body: course,
-    params: { courseTemplateId: course.id },
+  await template.chapter.update.call({
+    body: chapter,
+    params: { chapterTemplateId: chapter.id },
   })
-  redirect(`/template/course/${course.id}`)
+  redirect(`/template/chapter/${chapter.id}`)
 }
 
 export default async function Page({
   params: { id },
 }: { params: { id: string } }) {
-  const course = await template.course.get.call({
-    params: { courseTemplateId: Number(id) },
+  const chapter = await template.chapter.get.call({
+    params: { chapterTemplateId: Number(id) },
   })
 
   return (
     <>
       <Typography gutterBottom variant="h5" component="div">
-        Edit course template
+        Edit chapter template
       </Typography>
       <form className="flex flex-col gap-4" action={submit}>
-        <input type="hidden" name="id" value={course.id} />
+        <input type="hidden" name="id" value={chapter.id} />
         <TextField
           name="title"
           label="Title"
           required
-          defaultValue={course.title}
+          defaultValue={chapter.title}
         />
         <TextField
           name="description"
           label="Descrition"
           multiline
-          defaultValue={course.description}
+          defaultValue={chapter.description}
         />
         <Button
           type="submit"

@@ -3,21 +3,27 @@
 import { Delete } from '@mui/icons-material'
 import { Button } from '@mui/material'
 
-type Remove = (id: number) => void
+type RemoveObject = { id: number }
+type Remove<T extends RemoveObject> = (object: T) => void
+type Props<T extends RemoveObject> = {
+  object: T
+  remove: Remove<T>
+}
 
-function promptRemove(id: number, remove: Remove) {
+function promptRemove<T extends RemoveObject>({ object, remove }: Props<T>) {
   if (confirm('Are you sure?')) {
-    remove(id)
+    remove(object)
   }
 }
 
-export function DeleteButton({ id, remove }: { id: number; remove: Remove }) {
+export function DeleteButton<T extends RemoveObject>(props: Props<T>) {
   return (
     <Button
       variant="outlined"
       color="error"
       startIcon={<Delete />}
-      onClick={() => promptRemove(id, remove)}
+      onClick={() => promptRemove(props)}
+      className="h-fit"
     >
       Delete
     </Button>

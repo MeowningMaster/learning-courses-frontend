@@ -6,7 +6,6 @@ export const schema = {
     id: z.number(),
     title: z.string(),
     description: z.string(),
-    number: z.number(),
   }),
   params: z.object({
     chapterTemplateId: z.number(),

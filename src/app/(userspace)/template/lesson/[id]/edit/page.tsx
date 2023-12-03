@@ -11,40 +11,56 @@ async function submit(data: FormData) {
     unknown
   >
   dataObject.id = Number(dataObject.id)
-  const course = template.course.update.schema.body.parse(dataObject)
+  dataObject.maxMark = Number(dataObject.maxMark)
+  dataObject.successMark = Number(dataObject.successMark)
+  const lesson = template.lesson.update.schema.body.parse(dataObject)
 
-  await template.course.update.call({
-    body: course,
-    params: { courseTemplateId: course.id },
+  await template.lesson.update.call({
+    body: lesson,
+    params: { lessonTemplateId: lesson.id },
   })
-  redirect(`/template/course/${course.id}`)
+  redirect(`/template/lesson/${lesson.id}`)
 }
 
 export default async function Page({
   params: { id },
 }: { params: { id: string } }) {
-  const course = await template.course.get.call({
-    params: { courseTemplateId: Number(id) },
+  const lesson = await template.lesson.get.call({
+    params: { lessonTemplateId: Number(id) },
   })
 
   return (
     <>
       <Typography gutterBottom variant="h5" component="div">
-        Edit course template
+        Edit lesson template
       </Typography>
       <form className="flex flex-col gap-4" action={submit}>
-        <input type="hidden" name="id" value={course.id} />
+        <input type="hidden" name="id" value={lesson.id} />
         <TextField
           name="title"
           label="Title"
           required
-          defaultValue={course.title}
+          defaultValue={lesson.title}
         />
         <TextField
           name="description"
           label="Descrition"
           multiline
-          defaultValue={course.description}
+          defaultValue={lesson.description}
+        />
+        <TextField
+          type="number"
+          name="maxMark"
+          label="Max mark"
+          required
+          defaultValue={lesson.maxMark}
+        />
+        <TextField
+          type="number"
+          name="successMark"
+          label="Success mark"
+          required
+          defaultValue={lesson.successMark}
         />
         <Button
           type="submit"

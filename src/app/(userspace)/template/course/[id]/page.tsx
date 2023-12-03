@@ -8,7 +8,7 @@ import { redirect } from 'next/navigation'
 import React from 'react'
 import { Suspense } from 'react'
 
-async function remove(id: number) {
+async function remove({ id }: { id: number }) {
   'use server'
   await api.template.course.delete_.call({ params: { courseTemplateId: id } })
   redirect('/template')
@@ -34,10 +34,11 @@ export async function Content(params: { id: number }) {
             variant="outlined"
             startIcon={<Edit />}
             href={`/template/course/${id}/edit`}
+            className="h-fit"
           >
             Edit
           </Button>
-          <DeleteButton id={id} remove={remove} />
+          <DeleteButton object={course} remove={remove} />
         </div>
       </div>
       <Typography variant="body1" color="text.secondary">
