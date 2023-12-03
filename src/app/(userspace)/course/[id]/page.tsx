@@ -44,7 +44,7 @@ async function finish({ id }: { id: number }) {
   redirect('/')
 }
 
-export async function Content(params: { id: number }) {
+async function Content(params: { id: number }) {
   const id = Number(params.id)
   const [course, chapters, instructors, owner] = await Promise.all([
     api.course.get.call({ params: { courseId: id } }),

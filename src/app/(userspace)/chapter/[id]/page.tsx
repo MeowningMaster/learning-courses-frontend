@@ -14,7 +14,7 @@ export default async function Page({ params }: { params: { id: string } }) {
   )
 }
 
-export async function Content(params: { id: number }) {
+async function Content(params: { id: number }) {
   const id = Number(params.id)
   const [chapter, lessons] = await Promise.all([
     api.chapter.get.call({ params: { chapterId: id } }),

@@ -22,7 +22,7 @@ async function finish({ id, chapterId }: { id: number; chapterId: number }) {
   redirect(`/chapter/${chapterId}`)
 }
 
-export async function Content(params: { id: number }) {
+async function Content(params: { id: number }) {
   const id = Number(params.id)
   const [lesson] = await Promise.all([
     api.lesson.get.call({ params: { lessonId: id } }),

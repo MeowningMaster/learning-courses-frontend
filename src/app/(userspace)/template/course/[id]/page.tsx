@@ -35,7 +35,7 @@ async function applyTemplate(templateId: number) {
   redirect(`/course/${id}`)
 }
 
-export async function Content(params: { id: number }) {
+async function Content(params: { id: number }) {
   const id = Number(params.id)
   const [course, chapters] = await Promise.all([
     api.template.course.get.call({ params: { courseTemplateId: id } }),

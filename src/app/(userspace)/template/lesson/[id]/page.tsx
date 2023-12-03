@@ -25,7 +25,7 @@ async function remove({
   redirect(`/template/chapter/${chapterTemplateId}`)
 }
 
-export async function Content(params: { id: number }) {
+async function Content(params: { id: number }) {
   const id = Number(params.id)
   const [lesson] = await Promise.all([
     api.template.lesson.get.call({ params: { lessonTemplateId: id } }),
