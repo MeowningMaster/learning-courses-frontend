@@ -36,7 +36,7 @@ function LessonCard({
             <Typography gutterBottom variant="h5" component="div">
               {lesson.title}
             </Typography>
-            {lesson.isFinished && (
+            {lesson.isFinished === true && (
               <Chip label="Finished" variant="outlined" color="warning" />
             )}
           </div>
@@ -84,7 +84,7 @@ export function TemplateLessonList({ list }: { list: List }) {
       list={list}
       actions={{
         click: (lesson) => {
-          router.push(`/lesson/${lesson.id}`)
+          router.push(`/template/lesson/${lesson.id}`)
         },
       }}
     />

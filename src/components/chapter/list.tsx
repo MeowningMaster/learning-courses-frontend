@@ -15,7 +15,10 @@ import { z } from 'zod'
 type Chapter = z.infer<
   typeof course.getAllChaptersInCourse.schema.reply
 >[number]
-type PartialChapter = SemiPartial<Chapter, 'isFinished' | 'courseId'>
+type PartialChapter = Omit<
+  SemiPartial<Chapter, 'isFinished' | 'courseId'>,
+  'number'
+>
 type List = PartialChapter[]
 
 export type CardActions = {
@@ -34,7 +37,7 @@ function ChapterCard({
             <Typography gutterBottom variant="h5" component="div">
               {chapter.title}
             </Typography>
-            {chapter.isFinished && (
+            {chapter.isFinished === true && (
               <Chip label="Finished" variant="outlined" color="warning" />
             )}
           </div>

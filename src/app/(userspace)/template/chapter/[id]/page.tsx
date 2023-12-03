@@ -1,6 +1,6 @@
 import * as api from '@/api'
 import { PageFallback } from '@/components/fallback/page'
-import { CatalogLessonList } from '@/components/lesson/list'
+import { TemplateLessonList } from '@/components/lesson/list'
 import { Typography } from '@mui/material'
 import { Suspense } from 'react'
 
@@ -30,7 +30,7 @@ export async function Content(params: { id: number }) {
         </Typography>
       </div>
 
-      <CatalogLessonList list={lessons} />
+      <TemplateLessonList list={lessons} />
     </>
   )
 }
