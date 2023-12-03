@@ -2,6 +2,7 @@ import * as api from '@/api'
 import { DeleteButton } from '@/components/button/delete'
 import { PageFallback } from '@/components/fallback/page'
 import { TemplateLessonList } from '@/components/lesson/list'
+import { getPermissions } from '@/utilities/permissions'
 import { Add, Edit } from '@mui/icons-material'
 import { Button, Typography } from '@mui/material'
 import { redirect } from 'next/navigation'
@@ -35,6 +36,8 @@ async function Content(params: { id: number }) {
     }),
   ])
 
+  const canCreate = getPermissions().template.create
+
   return (
     <>
       <div className="flex gap-4 justify-between">
@@ -65,15 +68,16 @@ async function Content(params: { id: number }) {
       </div>
 
       <TemplateLessonList list={lessons} />
-
-      <Button
-        sx={{ marginTop: '2.5rem' }}
-        variant="outlined"
-        startIcon={<Add />}
-        href={`/template/lesson/${chapter.id}/create`}
-      >
-        New lesson
-      </Button>
+      {canCreate && (
+        <Button
+          sx={{ marginTop: '2.5rem' }}
+          variant="outlined"
+          startIcon={<Add />}
+          href={`/template/lesson/${chapter.id}/create`}
+        >
+          New lesson
+        </Button>
+      )}
     </>
   )
 }

@@ -2,6 +2,7 @@ import * as api from '@/api'
 import { DeleteButton } from '@/components/button/delete'
 import { TemplateChapterList } from '@/components/chapter/list'
 import { PageFallback } from '@/components/fallback/page'
+import { getPermissions } from '@/utilities/permissions'
 import { Add, Edit, Eject } from '@mui/icons-material'
 import { Button, Typography } from '@mui/material'
 import { redirect } from 'next/navigation'
@@ -44,6 +45,9 @@ async function Content(params: { id: number }) {
     }),
   ])
 
+  const canCreateChapter = getPermissions().template.create
+  const canApplyTemplate = getPermissions().course.create
+
   return (
     <>
       <div className="flex gap-4 justify-between">
@@ -66,7 +70,7 @@ async function Content(params: { id: number }) {
         {course.description}
       </Typography>
 
-      <ApplyButton id={id} apply={applyTemplate} />
+      {canApplyTemplate && <ApplyButton id={id} apply={applyTemplate} />}
 
       <div className="mt-10">
         <Typography gutterBottom variant="h5" component="div">
@@ -75,15 +79,16 @@ async function Content(params: { id: number }) {
       </div>
 
       <TemplateChapterList list={chapters} />
-
-      <Button
-        sx={{ marginTop: '2.5rem' }}
-        variant="outlined"
-        startIcon={<Add />}
-        href={`/template/chapter/${course.id}/create`}
-      >
-        New chapter
-      </Button>
+      {canCreateChapter && (
+        <Button
+          sx={{ marginTop: '2.5rem' }}
+          variant="outlined"
+          startIcon={<Add />}
+          href={`/template/chapter/${course.id}/create`}
+        >
+          New chapter
+        </Button>
+      )}
     </>
   )
 }
