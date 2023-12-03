@@ -1,6 +1,6 @@
 import * as api from '@/api'
 import { CatalogChapterList } from '@/components/chapter/list'
-import { ListFallback } from '@/components/list-fallback'
+import { PageFallback } from '@/components/fallback/page'
 import {
   Avatar,
   Chip,
@@ -17,7 +17,7 @@ import { z } from 'zod'
 
 export async function Content(params: { id: number }) {
   const id = Number(params.id)
-  const [course, chapters, Instructors] = await Promise.all([
+  const [course, chapters, instructors] = await Promise.all([
     api.course.get.call({ params: { courseId: id } }),
     api.course.getAllChaptersInCourse.call({ params: { courseId: id } }),
     api.course.getInfoOfUsersInCourse.call({
@@ -45,7 +45,7 @@ export async function Content(params: { id: number }) {
         </Typography>
       </div>
 
-      <InstructorsList list={Instructors} />
+      <InstructorsList list={instructors} />
 
       <div className="mt-10">
         <Typography gutterBottom variant="h5" component="div">
@@ -90,7 +90,7 @@ export default async function CoursePage({
 }: { params: { id: string } }) {
   return (
     <>
-      <Suspense fallback={<ListFallback />}>
+      <Suspense fallback={<PageFallback />}>
         <Content id={Number(params.id)} />
       </Suspense>
     </>

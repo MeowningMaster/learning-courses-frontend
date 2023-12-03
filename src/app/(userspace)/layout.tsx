@@ -78,7 +78,11 @@ export default function UserspaceLayout({
           <EasyListItem text={'Enrolled'} icon={<Subscriptions />} />
         )}
         {permissions.navigation.templates && (
-          <EasyListItem text={'Templates'} icon={<SnippetFolder />} />
+          <EasyListItem
+            text={'Templates'}
+            icon={<SnippetFolder />}
+            onClick={() => navigate('/template')}
+          />
         )}
       </List>
     </div>

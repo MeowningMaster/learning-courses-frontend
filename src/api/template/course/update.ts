@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { Api, ApiSchema } from '../fetcher'
+import { Api, ApiSchema } from '../../fetcher'
 
 // TODO: do not know the replay type because back-end response is bad request 400
 export const schema = {

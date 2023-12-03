@@ -1,6 +1,6 @@
 import { Skeleton } from '@mui/material'
 
-export function ListFallback() {
+export function PageFallback() {
   return (
     <div className="flex flex-col gap-4">
       <div>

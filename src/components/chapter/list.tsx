@@ -1,6 +1,7 @@
 'use client'
 
 import { course } from '@/api'
+import { SemiPartial } from '@/utilities/types/semi-partial'
 import {
   Card,
   CardActionArea,
@@ -11,16 +12,20 @@ import {
 import { useRouter } from 'next-nprogress-bar'
 import { z } from 'zod'
 
-type List = z.infer<typeof course.getAllChaptersInCourse.schema.reply>
-type Chapter = List[number]
+type Chapter = z.infer<
+  typeof course.getAllChaptersInCourse.schema.reply
+>[number]
+type PartialChapter = SemiPartial<Chapter, 'isFinished' | 'courseId'>
+type List = PartialChapter[]
+
 export type CardActions = {
-  click?: (chapter: Chapter) => void
+  click?: (chapter: PartialChapter) => void
 }
 
 function ChapterCard({
   chapter,
   actions,
-}: { chapter: Chapter; actions?: CardActions }) {
+}: { chapter: PartialChapter; actions?: CardActions }) {
   return (
     <Card key={chapter.id} onClick={() => actions?.click?.(chapter)}>
       <CardActionArea>
@@ -57,6 +62,20 @@ export function ChapterList({
 }
 
 export function CatalogChapterList({ list }: { list: List }) {
+  const router = useRouter()
+  return (
+    <ChapterList
+      list={list}
+      actions={{
+        click: (chapter) => {
+          router.push(`/chapter/${chapter.id}`)
+        },
+      }}
+    />
+  )
+}
+
+export function TemplateChapterList({ list }: { list: List }) {
   const router = useRouter()
   return (
     <ChapterList

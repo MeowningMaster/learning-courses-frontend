@@ -1,6 +1,7 @@
 'use client'
 
 import { course } from '@/api'
+import { SemiPartial } from '@/utilities/types/semi-partial'
 import {
   Card,
   CardActionArea,
@@ -11,7 +12,9 @@ import {
 import { useRouter } from 'next-nprogress-bar'
 import { z } from 'zod'
 
-type List = z.infer<typeof course.getAll.schema.reply>
+type Course = z.infer<typeof course.getAll.schema.reply>[number]
+type PartialCourse = SemiPartial<Course, 'description' | 'isFinished'>
+type List = PartialCourse[]
 export type CourseCardActions = {
   click?: (id: number) => void
 }
@@ -28,7 +31,7 @@ function CourseCard({
             <Typography gutterBottom variant="h5" component="div">
               {course.title}
             </Typography>
-            {!course.isFinished && (
+            {course.isFinished === false && (
               <Chip label="Ongoing" variant="outlined" color="success" />
             )}
           </div>
@@ -63,6 +66,20 @@ export function CatalogCourseList({ list }: { list: List }) {
       actions={{
         click: (id) => {
           router.push(`/course/${id}`)
+        },
+      }}
+    />
+  )
+}
+
+export function TemplateCourseList({ list }: { list: List }) {
+  const router = useRouter()
+  return (
+    <CourseList
+      list={list}
+      actions={{
+        click: (id) => {
+          router.push(`/template/course/${id}`)
         },
       }}
     />

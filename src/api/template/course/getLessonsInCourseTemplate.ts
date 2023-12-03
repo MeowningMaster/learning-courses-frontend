@@ -1,12 +1,7 @@
 import { z } from 'zod'
-import { Api, ApiSchema } from '../fetcher'
+import { Api, ApiSchema } from '../../fetcher'
 
 export const schema = {
-  body: z.object({
-    title: z.string(),
-    description: z.string(),
-    number: z.number(),
-  }),
   params: z.object({
     courseTemplateId: z.number(),
   }),
@@ -15,8 +10,13 @@ export const schema = {
     title: z.string(),
     description: z.string(),
     number: z.number(),
+    maxMark: z.number(),
+    successMark: z.number(),
     courseTemplateId: z.number(),
+    chapterTemplateId: z.number(),
   }),
 } satisfies ApiSchema
 
-export const call = Api('/templates/chapters', schema, { method: 'POST' })
+export const call = Api('/templates/courses/course/lessons', schema, {
+  method: 'GET',
+})

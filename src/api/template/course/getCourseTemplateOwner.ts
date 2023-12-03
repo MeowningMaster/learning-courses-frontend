@@ -1,6 +1,6 @@
 import { userType } from '@/api/commonType'
 import { z } from 'zod'
-import { Api, ApiSchema } from '../fetcher'
+import { Api, ApiSchema } from '../../fetcher'
 
 export const schema = {
   params: z.object({

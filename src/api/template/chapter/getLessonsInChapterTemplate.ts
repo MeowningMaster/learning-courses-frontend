@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { Api, ApiSchema } from '../fetcher'
+import { Api, ApiSchema } from '../../fetcher'
 
 // TODO: replay
 export const schema = {
