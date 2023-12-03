@@ -5,11 +5,6 @@ import { Add } from '@mui/icons-material'
 import { Button, Typography } from '@mui/material'
 import { Suspense } from 'react'
 
-async function Context() {
-  const courses = await template.course.getAll.call()
-  return <TemplateCourseList list={courses} />
-}
-
 export default function CoursesCatalog() {
   return (
     <>
@@ -29,4 +24,9 @@ export default function CoursesCatalog() {
       </Suspense>
     </>
   )
+}
+
+async function Context() {
+  const courses = await template.course.getAll.call()
+  return <TemplateCourseList list={courses} />
 }

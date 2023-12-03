@@ -7,6 +7,16 @@ import { Button, Typography } from '@mui/material'
 import { redirect } from 'next/navigation'
 import { Suspense } from 'react'
 
+export default async function Page({ params }: { params: { id: string } }) {
+  return (
+    <>
+      <Suspense fallback={<PageFallback />}>
+        <Content id={Number(params.id)} />
+      </Suspense>
+    </>
+  )
+}
+
 async function remove({
   id,
   courseTemplateId,
@@ -64,16 +74,6 @@ export async function Content(params: { id: number }) {
       >
         New lesson
       </Button>
-    </>
-  )
-}
-
-export default async function Page({ params }: { params: { id: string } }) {
-  return (
-    <>
-      <Suspense fallback={<PageFallback />}>
-        <Content id={Number(params.id)} />
-      </Suspense>
     </>
   )
 }

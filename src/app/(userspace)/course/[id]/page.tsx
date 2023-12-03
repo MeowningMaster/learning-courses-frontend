@@ -20,6 +20,18 @@ import React from 'react'
 import { Suspense } from 'react'
 import { z } from 'zod'
 
+export default async function CoursePage({
+  params,
+}: { params: { id: string } }) {
+  return (
+    <>
+      <Suspense fallback={<PageFallback />}>
+        <Content id={Number(params.id)} />
+      </Suspense>
+    </>
+  )
+}
+
 async function remove({ id }: { id: number }) {
   'use server'
   await api.course.delete.call({ params: { courseId: id } })
@@ -112,17 +124,5 @@ function InstructorsList({ list }: { list: Instructors }) {
         )
       })}
     </List>
-  )
-}
-
-export default async function CoursePage({
-  params,
-}: { params: { id: string } }) {
-  return (
-    <>
-      <Suspense fallback={<PageFallback />}>
-        <Content id={Number(params.id)} />
-      </Suspense>
-    </>
   )
 }

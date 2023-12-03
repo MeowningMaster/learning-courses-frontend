@@ -9,6 +9,18 @@ import React from 'react'
 import { Suspense } from 'react'
 import { ApplyButton } from './apply-button'
 
+export default async function CoursePage({
+  params,
+}: { params: { id: string } }) {
+  return (
+    <>
+      <Suspense fallback={<PageFallback />}>
+        <Content id={Number(params.id)} />
+      </Suspense>
+    </>
+  )
+}
+
 async function remove({ id }: { id: number }) {
   'use server'
   await api.template.course.delete_.call({ params: { courseTemplateId: id } })
@@ -72,18 +84,6 @@ export async function Content(params: { id: number }) {
       >
         New chapter
       </Button>
-    </>
-  )
-}
-
-export default async function CoursePage({
-  params,
-}: { params: { id: string } }) {
-  return (
-    <>
-      <Suspense fallback={<PageFallback />}>
-        <Content id={Number(params.id)} />
-      </Suspense>
     </>
   )
 }

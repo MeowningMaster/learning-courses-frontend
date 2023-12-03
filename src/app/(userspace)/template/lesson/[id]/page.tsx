@@ -6,6 +6,16 @@ import { Button, Chip, Typography } from '@mui/material'
 import { redirect } from 'next/navigation'
 import { Suspense } from 'react'
 
+export default async function Page({ params }: { params: { id: string } }) {
+  return (
+    <>
+      <Suspense fallback={<PageFallback />}>
+        <Content id={Number(params.id)} />
+      </Suspense>
+    </>
+  )
+}
+
 async function remove({
   id,
   chapterTemplateId,
@@ -46,16 +56,6 @@ export async function Content(params: { id: number }) {
         <Chip label={`Max mark: ${lesson.maxMark}`} />
         <Chip label={`Success mark: ${lesson.successMark}`} />
       </div>
-    </>
-  )
-}
-
-export default async function Page({ params }: { params: { id: string } }) {
-  return (
-    <>
-      <Suspense fallback={<PageFallback />}>
-        <Content id={Number(params.id)} />
-      </Suspense>
     </>
   )
 }

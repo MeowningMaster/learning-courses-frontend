@@ -6,6 +6,16 @@ import { Chip, Typography } from '@mui/material'
 import { redirect } from 'next/navigation'
 import { Suspense } from 'react'
 
+export default async function Page({ params }: { params: { id: string } }) {
+  return (
+    <>
+      <Suspense fallback={<PageFallback />}>
+        <Content id={Number(params.id)} />
+      </Suspense>
+    </>
+  )
+}
+
 async function finish({ id, chapterId }: { id: number; chapterId: number }) {
   'use server'
   await api.lesson.finishLesson.call({ params: { lessonId: id } })
@@ -40,16 +50,6 @@ export async function Content(params: { id: number }) {
       <Typography variant="body1" color="text.secondary">
         {lesson.description}
       </Typography>
-    </>
-  )
-}
-
-export default async function Page({ params }: { params: { id: string } }) {
-  return (
-    <>
-      <Suspense fallback={<PageFallback />}>
-        <Content id={Number(params.id)} />
-      </Suspense>
     </>
   )
 }

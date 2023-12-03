@@ -4,6 +4,16 @@ import { CatalogLessonList } from '@/components/lesson/list'
 import { Chip, Typography } from '@mui/material'
 import { Suspense } from 'react'
 
+export default async function Page({ params }: { params: { id: string } }) {
+  return (
+    <>
+      <Suspense fallback={<PageFallback />}>
+        <Content id={Number(params.id)} />
+      </Suspense>
+    </>
+  )
+}
+
 export async function Content(params: { id: number }) {
   const id = Number(params.id)
   const [chapter, lessons] = await Promise.all([
@@ -32,16 +42,6 @@ export async function Content(params: { id: number }) {
       </div>
 
       <CatalogLessonList list={lessons} />
-    </>
-  )
-}
-
-export default async function Page({ params }: { params: { id: string } }) {
-  return (
-    <>
-      <Suspense fallback={<PageFallback />}>
-        <Content id={Number(params.id)} />
-      </Suspense>
     </>
   )
 }

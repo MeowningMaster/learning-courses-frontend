@@ -4,11 +4,6 @@ import ListFallback from '@/components/fallback/list'
 import { Typography } from '@mui/material'
 import { Suspense } from 'react'
 
-async function Context() {
-  const courses = await course.getAll.call()
-  return <CatalogCourseList list={courses} />
-}
-
 export default function CoursesCatalog() {
   return (
     <>
@@ -20,4 +15,9 @@ export default function CoursesCatalog() {
       </Suspense>
     </>
   )
+}
+
+async function Context() {
+  const courses = await course.getAll.call()
+  return <CatalogCourseList list={courses} />
 }
