@@ -67,9 +67,9 @@ function InstructorsList({ list }: { list: Instructors }) {
     <List className="w-fit">
       {list.map(({ user }, index) => {
         return (
-          <>
+          <React.Fragment key={user.id}>
             {index !== 0 && <Divider variant="inset" component="li" />}
-            <ListItem alignItems="flex-start" key={user.id}>
+            <ListItem alignItems="flex-start">
               <ListItemAvatar>
                 <Avatar />
               </ListItemAvatar>
@@ -78,7 +78,7 @@ function InstructorsList({ list }: { list: Instructors }) {
                 secondary={user.login}
               />
             </ListItem>
-          </>
+          </React.Fragment>
         )
       })}
     </List>
