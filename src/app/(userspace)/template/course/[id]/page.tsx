@@ -1,7 +1,8 @@
 import * as api from '@/api'
 import { TemplateChapterList } from '@/components/chapter/list'
 import { PageFallback } from '@/components/fallback/page'
-import { Typography } from '@mui/material'
+import { Edit } from '@mui/icons-material'
+import { Button, Typography } from '@mui/material'
 import React from 'react'
 import { Suspense } from 'react'
 
@@ -20,6 +21,15 @@ export async function Content(params: { id: number }) {
         <Typography gutterBottom variant="h5" component="div">
           {course.title}
         </Typography>
+        <div>
+          <Button
+            variant="outlined"
+            startIcon={<Edit />}
+            href={`/template/course/${id}/edit`}
+          >
+            Edit
+          </Button>
+        </div>
       </div>
       <Typography variant="body1" color="text.secondary">
         {course.description}
