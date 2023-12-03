@@ -13,7 +13,7 @@ async function remove({
 }: { id: number; courseTemplateId: number }) {
   'use server'
   await api.template.chapter.delete_.call({ params: { chapterTemplateId: id } })
-  redirect(`/template/course${courseTemplateId}`)
+  redirect(`/template/course/${courseTemplateId}`)
 }
 
 export async function Content(params: { id: number }) {

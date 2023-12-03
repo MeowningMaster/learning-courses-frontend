@@ -2,7 +2,7 @@ import * as api from '@/api'
 import { TemplateChapterList } from '@/components/chapter/list'
 import { DeleteButton } from '@/components/delete-button'
 import { PageFallback } from '@/components/fallback/page'
-import { Edit } from '@mui/icons-material'
+import { Add, Edit } from '@mui/icons-material'
 import { Button, Typography } from '@mui/material'
 import { redirect } from 'next/navigation'
 import React from 'react'
@@ -52,6 +52,15 @@ export async function Content(params: { id: number }) {
       </div>
 
       <TemplateChapterList list={chapters} />
+
+      <Button
+        sx={{ marginTop: '2.5rem' }}
+        variant="outlined"
+        startIcon={<Add />}
+        href={`/template/chapter/${course.id}/create`}
+      >
+        New chapter
+      </Button>
     </>
   )
 }
