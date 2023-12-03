@@ -2,16 +2,25 @@ import * as api from '@/api'
 import { TemplateChapterList } from '@/components/chapter/list'
 import { DeleteButton } from '@/components/delete-button'
 import { PageFallback } from '@/components/fallback/page'
-import { Add, Edit } from '@mui/icons-material'
+import { Add, Edit, Eject } from '@mui/icons-material'
 import { Button, Typography } from '@mui/material'
 import { redirect } from 'next/navigation'
 import React from 'react'
 import { Suspense } from 'react'
+import { ApplyButton } from './apply-button'
 
 async function remove({ id }: { id: number }) {
   'use server'
   await api.template.course.delete_.call({ params: { courseTemplateId: id } })
   redirect('/template')
+}
+
+async function applyTemplate(templateId: number) {
+  'use server'
+  const { id } = await api.template.course.createCourseFromTemplate.call({
+    params: { courseTemplateId: templateId },
+  })
+  redirect(`/course/${id}`)
 }
 
 export async function Content(params: { id: number }) {
@@ -44,6 +53,8 @@ export async function Content(params: { id: number }) {
       <Typography variant="body1" color="text.secondary">
         {course.description}
       </Typography>
+
+      <ApplyButton id={id} apply={applyTemplate} />
 
       <div className="mt-10">
         <Typography gutterBottom variant="h5" component="div">
