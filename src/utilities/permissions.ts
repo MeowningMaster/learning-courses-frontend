@@ -10,6 +10,10 @@ type TypePermissions = {
   course: {
     create: boolean
     enroll: boolean
+    /**
+     * delete | finish
+     */
+    operate: boolean
   }
   template: {
     create: boolean
@@ -28,6 +32,7 @@ export const permissions: Permissions = {
     course: {
       create: false,
       enroll: false,
+      operate: true,
     },
     template: {
       create: false,
@@ -42,6 +47,7 @@ export const permissions: Permissions = {
     course: {
       create: true,
       enroll: false,
+      operate: true,
     },
     template: {
       create: true,
@@ -56,6 +62,7 @@ export const permissions: Permissions = {
     course: {
       create: false,
       enroll: true,
+      operate: false,
     },
     template: {
       create: false,

@@ -22,7 +22,7 @@ export type CourseCardActions = {
 function CourseCard({
   course,
   actions,
-}: { course: List[number]; actions?: CourseCardActions }) {
+}: { course: PartialCourse; actions?: CourseCardActions }) {
   return (
     <Card key={course.id} onClick={() => actions?.click?.(course.id)}>
       <CardActionArea>
@@ -58,11 +58,17 @@ export function CourseList({
   )
 }
 
-export function CatalogCourseList({ list }: { list: List }) {
+export function CatalogCourseList({ list }: { list: Course[] }) {
   const router = useRouter()
   return (
     <CourseList
-      list={list}
+      list={list.sort((a, b) => {
+        if (a.isFinished === b.isFinished) {
+          return a.id - b.id
+        } else {
+          return a.isFinished ? 1 : -1
+        }
+      })}
       actions={{
         click: (id) => {
           router.push(`/course/${id}`)

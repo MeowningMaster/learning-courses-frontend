@@ -1,5 +1,5 @@
 import * as api from '@/api'
-import { DeleteButton } from '@/components/delete-button'
+import { DeleteButton } from '@/components/button/delete'
 import { PageFallback } from '@/components/fallback/page'
 import { TemplateLessonList } from '@/components/lesson/list'
 import { Add, Edit } from '@mui/icons-material'

@@ -1,6 +1,6 @@
 import * as api from '@/api'
+import { DeleteButton } from '@/components/button/delete'
 import { TemplateChapterList } from '@/components/chapter/list'
-import { DeleteButton } from '@/components/delete-button'
 import { PageFallback } from '@/components/fallback/page'
 import { Add, Edit, Eject } from '@mui/icons-material'
 import { Button, Typography } from '@mui/material'

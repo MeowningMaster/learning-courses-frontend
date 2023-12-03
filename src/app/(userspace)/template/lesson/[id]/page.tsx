@@ -1,5 +1,5 @@
 import * as api from '@/api'
-import { DeleteButton } from '@/components/delete-button'
+import { DeleteButton } from '@/components/button/delete'
 import { PageFallback } from '@/components/fallback/page'
 import { Edit } from '@mui/icons-material'
 import { Button, Chip, Typography } from '@mui/material'
