@@ -46,17 +46,27 @@ export async function fetchApi<
     }
   }
 
-  const headers: [string, string][] = [['Content-Type', 'application/json']]
+  const headers: [string, string][] = []
 
   const authData = auth.get()
   if (authData) {
     headers.push(['Authorization', `Bearer ${authData.token}`])
   }
 
+  let actualBody: RequestInit['body']
+  if (body) {
+    if (typeof body === 'object' && (body as object) instanceof FormData) {
+      actualBody = body
+    } else {
+      actualBody = JSON.stringify(body)
+      headers.push(['Content-Type', 'application/json'])
+    }
+  }
+
   const reply = await fetch(url, {
     method,
     headers,
-    body: body && JSON.stringify(body),
+    body: actualBody,
   })
 
   if (!reply.ok) {
@@ -67,9 +77,21 @@ export async function fetchApi<
     throw new Error(reply.statusText)
   }
 
-  if (schema.reply) {
-    const replyBody = await reply.json()
-    return schema.reply.parse(replyBody)
+  try {
+    if (schema.reply) {
+      const replyBody = await reply.json()
+      return schema.reply.parse(replyBody)
+    }
+    if (
+      reply.headers.get('Content-Type')?.includes('application/octet-stream')
+    ) {
+      return await reply.blob()
+    }
+  } catch (error) {
+    if (options.canFail) {
+      return undefined
+    }
+    throw error
   }
   return undefined
 }
