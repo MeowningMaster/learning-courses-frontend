@@ -2,6 +2,7 @@
 
 import { getPermissions } from '@/utilities/permissions'
 import {
+  PersonAdd,
   SnippetFolder,
   Subscriptions,
   TravelExplore,
@@ -27,15 +28,15 @@ const drawerWidth = 200
 function EasyListItem({
   text,
   icon,
-  onClick,
+  href,
 }: {
   text: string
   icon: React.ReactNode
-  onClick?: () => void
+  href: string
 }) {
   return (
     <ListItem key={text} disablePadding>
-      <ListItemButton onClick={onClick}>
+      <ListItemButton href={href}>
         <ListItemIcon>{icon}</ListItemIcon>
         <ListItemText primary={text} />
       </ListItemButton>
@@ -68,20 +69,27 @@ export default function UserspaceLayout({
       <List>
         <Divider textAlign="left">Courses</Divider>
         {permissions.navigation.catalog && (
-          <EasyListItem
-            text={'Catalog'}
-            icon={<TravelExplore />}
-            onClick={() => navigate('/')}
-          />
+          <EasyListItem text={'Catalog'} icon={<TravelExplore />} href="/" />
         )}
         {permissions.navigation.enrolled && (
-          <EasyListItem text={'Enrolled'} icon={<Subscriptions />} onClick={() => navigate('/enrolled')} />
+          <EasyListItem
+            text={'Enrolled'}
+            icon={<Subscriptions />}
+            href="/enrolled"
+          />
         )}
         {permissions.navigation.templates && (
           <EasyListItem
             text={'Templates'}
             icon={<SnippetFolder />}
-            onClick={() => navigate('/template')}
+            href="/template"
+          />
+        )}
+        {permissions.instructor.create && (
+          <EasyListItem
+            text={'Instructor'}
+            icon={<PersonAdd />}
+            href="/create-instructor"
           />
         )}
       </List>

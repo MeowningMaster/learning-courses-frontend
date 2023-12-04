@@ -18,6 +18,9 @@ type TypePermissions = {
   template: {
     create: boolean
   }
+  instructor: {
+    create: boolean
+  }
 }
 
 type Permissions = Record<UserType, TypePermissions>
@@ -37,6 +40,9 @@ export const permissions: Permissions = {
     template: {
       create: false,
     },
+    instructor: {
+      create: true,
+    },
   },
   INSTRUCTOR: {
     navigation: {
@@ -52,6 +58,9 @@ export const permissions: Permissions = {
     template: {
       create: true,
     },
+    instructor: {
+      create: false,
+    },
   },
   STUDENT: {
     navigation: {
@@ -65,6 +74,9 @@ export const permissions: Permissions = {
       operate: false,
     },
     template: {
+      create: false,
+    },
+    instructor: {
       create: false,
     },
   },
