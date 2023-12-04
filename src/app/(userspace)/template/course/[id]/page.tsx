@@ -10,9 +10,7 @@ import React from 'react'
 import { Suspense } from 'react'
 import { ApplyButton } from './apply-button'
 
-export default async function CoursePage({
-  params,
-}: { params: { id: string } }) {
+export default function CoursePage({ params }: { params: { id: string } }) {
   return (
     <>
       <Suspense fallback={<PageFallback />}>

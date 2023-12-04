@@ -1,7 +1,7 @@
 'use client'
 
-import { UserType } from '@/api/commonType'
 import { auth } from '@/utilities/auth'
+import { userColorMap } from '@/utilities/user-color-map'
 import { Person } from '@mui/icons-material'
 import { Menu } from '@mui/icons-material'
 import {
@@ -13,7 +13,6 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material'
-import { deepOrange, deepPurple, grey } from '@mui/material/colors'
 import { useRouter } from 'next-nprogress-bar'
 
 export default function LayoutToolbar({
@@ -41,12 +40,6 @@ export default function LayoutToolbar({
   )
 }
 
-const bgcolorMap: Record<UserType, string> = {
-  ADMIN: deepOrange[500],
-  INSTRUCTOR: deepPurple[500],
-  STUDENT: grey[500],
-}
-
 function PersonAvatar() {
   const router = useRouter()
   function logout() {
@@ -55,11 +48,10 @@ function PersonAvatar() {
   }
 
   const { login, role } = auth.getOrThrow()
-  const bgcolor = bgcolorMap[role]
   return (
     <Tooltip title={`Logout ${login}`}>
       <IconButton onClick={logout}>
-        <Avatar sx={{ bgcolor }}>
+        <Avatar sx={{ bgcolor: userColorMap[role] }}>
           <Person />
         </Avatar>
       </IconButton>

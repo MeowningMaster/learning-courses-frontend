@@ -6,8 +6,11 @@ import { CatalogChapterList } from '@/components/chapter/list'
 import { PageFallback } from '@/components/fallback/page'
 import { auth } from '@/utilities/auth'
 import { getPermissions } from '@/utilities/permissions'
+import { userColorMap } from '@/utilities/user-color-map'
+import { List as ListIcon } from '@mui/icons-material'
 import {
   Avatar,
+  Button,
   Chip,
   Divider,
   List,
@@ -16,15 +19,12 @@ import {
   ListItemText,
   Typography,
 } from '@mui/material'
-import { deepOrange, deepPurple } from '@mui/material/colors'
 import { redirect } from 'next/navigation'
 import React from 'react'
 import { Suspense } from 'react'
 import { z } from 'zod'
 
-export default async function CoursePage({
-  params,
-}: { params: { id: string } }) {
+export default function CoursePage({ params }: { params: { id: string } }) {
   return (
     <>
       <Suspense fallback={<PageFallback />}>
@@ -70,19 +70,22 @@ async function Content(params: { id: number }) {
       }),
     ])
 
+  const isLocalInstructor = instructors
+    .map(({ user: { id } }) => id)
+    .includes(user.id)
   const canOperate =
     getPermissions().course.operate &&
-    (user.role === 'ADMIN' || owner.id === user.id)
+    (user.role === 'ADMIN' || isLocalInstructor)
 
   const isEnrolled = enrollDetails?.isApproved
   const canEnroll =
-    getPermissions().course.enroll && !course.isFinished && owner.id !== user.id
+    getPermissions().course.enroll && !course.isFinished && !isLocalInstructor
 
   const canSeeResults = isEnrolled && user.role === 'STUDENT'
 
   return (
     <>
-      <div className="flex gap-4 justify-between flex-wrap-reverse">
+      <div className="flex gap-4 justify-between flex-wrap-reverse pb-2">
         <div className="flex gap-4">
           <Typography gutterBottom variant="h5" component="div">
             {course.title}
@@ -99,6 +102,17 @@ async function Content(params: { id: number }) {
           )}
         </div>
         <div className="flex gap-4">
+          {canOperate && !course.isFinished && (
+            <Button
+              startIcon={<ListIcon />}
+              variant="outlined"
+              sx={{ whiteSpace: 'nowrap' }}
+              className="h-fit"
+              href={`${course.id}/enrolls`}
+            >
+              Enrolls list
+            </Button>
+          )}
           {canEnroll && (
             <EnrollButton
               object={course}
@@ -122,7 +136,7 @@ async function Content(params: { id: number }) {
         </Typography>
       </div>
 
-      <InstructorsList list={instructors} ownerId={owner.id} />
+      <InstructorsList list={instructors} />
       {canSeeResults && userInfo.finalFeedback && (
         <>
           <div className="mt-10">
@@ -150,10 +164,7 @@ type Instructors = z.infer<
   typeof api.course.getInfoOfUsersInCourse.schema.reply
 >
 
-function InstructorsList({
-  list,
-  ownerId,
-}: { list: Instructors; ownerId: number }) {
+function InstructorsList({ list }: { list: Instructors }) {
   return (
     <List className="w-fit">
       {list.map(({ user }, index) => {
@@ -164,11 +175,7 @@ function InstructorsList({
               <ListItemAvatar>
                 <Avatar
                   sx={{
-                    bgcolor: deepPurple[500],
-                    border:
-                      user.id === ownerId
-                        ? `2px solid ${deepOrange[500]}`
-                        : undefined,
+                    bgcolor: userColorMap.INSTRUCTOR,
                   }}
                 />
               </ListItemAvatar>

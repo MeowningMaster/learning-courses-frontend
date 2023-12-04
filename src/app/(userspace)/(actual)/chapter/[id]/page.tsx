@@ -4,7 +4,7 @@ import { CatalogLessonList } from '@/components/lesson/list'
 import { Chip, Typography } from '@mui/material'
 import { Suspense } from 'react'
 
-export default async function Page({ params }: { params: { id: string } }) {
+export default function Page({ params }: { params: { id: string } }) {
   return (
     <>
       <Suspense fallback={<PageFallback />}>

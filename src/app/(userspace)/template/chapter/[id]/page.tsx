@@ -8,7 +8,7 @@ import { Button, Typography } from '@mui/material'
 import { redirect } from 'next/navigation'
 import { Suspense } from 'react'
 
-export default async function Page({ params }: { params: { id: string } }) {
+export default function Page({ params }: { params: { id: string } }) {
   return (
     <>
       <Suspense fallback={<PageFallback />}>
