@@ -18,7 +18,7 @@ type FullLesson = z.infer<
 type Lesson = Omit<
   SemiPartial<FullLesson, 'isFinished' | 'courseId' | 'chapterId'>,
   'number'
->
+> & { mark?: number; isPassed?: number }
 type List = Lesson[]
 export type LessonCardActions = {
   click?: (lesson: Lesson) => void
@@ -36,9 +36,18 @@ function LessonCard({
             <Typography gutterBottom variant="h5" component="div">
               {lesson.title}
             </Typography>
-            {lesson.isFinished === true && (
-              <Chip label="Finished" variant="outlined" color="warning" />
-            )}
+            <div className="flex gap-4">
+              {lesson.isFinished === true && (
+                <Chip label="Finished" variant="outlined" color="warning" />
+              )}
+              {typeof lesson.mark === 'number' && (
+                <Chip
+                  label={`Mark: ${lesson.mark}`}
+                  variant="outlined"
+                  color={lesson.isPassed ? 'success' : 'warning'}
+                />
+              )}
+            </div>
           </div>
 
           <Typography variant="body2" color="text.secondary">

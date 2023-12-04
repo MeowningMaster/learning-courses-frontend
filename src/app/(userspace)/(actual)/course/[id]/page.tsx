@@ -67,7 +67,9 @@ async function Content(params: { id: number }) {
     (auth.getOrThrow().role === 'ADMIN' || owner.id === auth.getOrThrow().id)
 
   const isEnrolled = userInfo !== undefined
-  const canEnroll = getPermissions().course.enroll
+  const canEnroll = getPermissions().course.enroll && !course.isFinished
+
+  const canSeeResults = isEnrolled && auth.getOrThrow().role === 'STUDENT'
 
   return (
     <>
@@ -78,6 +80,13 @@ async function Content(params: { id: number }) {
           </Typography>
           {!course.isFinished && (
             <Chip label="Ongoing" variant="outlined" color="success" />
+          )}
+          {canSeeResults && (
+            <Chip
+              label={`Mark: ${userInfo.mark}`}
+              color={userInfo.isPassed ? 'success' : 'warning'}
+              variant="outlined"
+            />
           )}
         </div>
         <div className="flex gap-4">
@@ -105,7 +114,18 @@ async function Content(params: { id: number }) {
       </div>
 
       <InstructorsList list={instructors} />
-
+      {canSeeResults && userInfo.finalFeedback && (
+        <>
+          <div className="mt-10">
+            <Typography gutterBottom variant="h5" component="div">
+              Final feedback
+            </Typography>
+            <Typography variant="body1" color="text.secondary">
+              {userInfo.finalFeedback}
+            </Typography>
+          </div>
+        </>
+      )}
       <div className="mt-10">
         <Typography gutterBottom variant="h5" component="div">
           Chapters

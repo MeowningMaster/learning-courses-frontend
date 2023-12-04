@@ -24,8 +24,9 @@ async function finish({ id, chapterId }: { id: number; chapterId: number }) {
 
 async function Content(params: { id: number }) {
   const id = Number(params.id)
-  const [lesson] = await Promise.all([
+  const [lesson, info] = await Promise.all([
     api.lesson.get.call({ params: { lessonId: id } }),
+    api.userToLesson.get.call({ params: { lessonId: id }, canFail: true }),
   ])
 
   const canOperate = getPermissions().course.operate
@@ -39,6 +40,13 @@ async function Content(params: { id: number }) {
           </Typography>
           {lesson.isFinished && (
             <Chip label="Finished" variant="outlined" color="warning" />
+          )}
+          {info && (
+            <Chip
+              label={`Mark: ${info.mark}`}
+              color={info.isPassed ? 'success' : 'warning'}
+              variant="outlined"
+            />
           )}
         </div>
         <div className="flex gap-4">

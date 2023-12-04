@@ -16,10 +16,28 @@ export default async function Page({ params }: { params: { id: string } }) {
 
 async function Content(params: { id: number }) {
   const id = Number(params.id)
-  const [chapter, lessons] = await Promise.all([
+  const [chapter, lessons, info] = await Promise.all([
     api.chapter.get.call({ params: { chapterId: id } }),
     api.chapter.getLessons.call({ params: { chapterId: id } }),
+    api.userToLesson.getAllInChapter.call({
+      params: { chapterId: id },
+      canFail: true,
+    }),
   ])
+
+  if (info) {
+    for (const lesson of lessons as unknown as {
+      id: number
+      mark: number
+      isPassed: boolean
+    }[]) {
+      const lessonInfo = info.find((x) => x.lessonId === lesson.id)
+      if (lessonInfo) {
+        lesson.mark = lessonInfo.mark
+        lesson.isPassed = lessonInfo.isPassed
+      }
+    }
+  }
 
   return (
     <>
