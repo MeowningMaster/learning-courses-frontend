@@ -16,6 +16,7 @@ import {
   ListItemText,
   Typography,
 } from '@mui/material'
+import { deepOrange, deepPurple } from '@mui/material/colors'
 import { redirect } from 'next/navigation'
 import React from 'react'
 import { Suspense } from 'react'
@@ -52,24 +53,32 @@ async function enroll({ id }: { id: number }) {
 
 async function Content(params: { id: number }) {
   const id = Number(params.id)
-  const [course, chapters, instructors, owner, userInfo] = await Promise.all([
-    api.course.get.call({ params: { courseId: id } }),
-    api.course.getAllChaptersInCourse.call({ params: { courseId: id } }),
-    api.course.getInfoOfUsersInCourse.call({
-      params: { courseId: id, roleType: 'INSTRUCTOR' },
-    }),
-    api.course.getOwner.call({ params: { courseId: id } }),
-    api.userToCourse.get.call({ params: { courseId: id }, canFail: true }),
-  ])
+
+  const user = auth.getOrThrow()
+  const [course, chapters, instructors, owner, userInfo, enrollDetails] =
+    await Promise.all([
+      api.course.get.call({ params: { courseId: id } }),
+      api.course.getAllChaptersInCourse.call({ params: { courseId: id } }),
+      api.course.getInfoOfUsersInCourse.call({
+        params: { courseId: id, roleType: 'INSTRUCTOR' },
+      }),
+      api.course.getOwner.call({ params: { courseId: id } }),
+      api.userToCourse.get.call({ params: { courseId: id }, canFail: true }),
+      api.course.getUsersLastEnrollRequest.call({
+        params: { courseId: id, userId: user.id },
+        canFail: true,
+      }),
+    ])
 
   const canOperate =
     getPermissions().course.operate &&
-    (auth.getOrThrow().role === 'ADMIN' || owner.id === auth.getOrThrow().id)
+    (user.role === 'ADMIN' || owner.id === user.id)
 
-  const isEnrolled = userInfo !== undefined
-  const canEnroll = getPermissions().course.enroll && !course.isFinished
+  const isEnrolled = enrollDetails?.isApproved
+  const canEnroll =
+    getPermissions().course.enroll && !course.isFinished && owner.id !== user.id
 
-  const canSeeResults = isEnrolled && auth.getOrThrow().role === 'STUDENT'
+  const canSeeResults = isEnrolled && user.role === 'STUDENT'
 
   return (
     <>
@@ -94,7 +103,7 @@ async function Content(params: { id: number }) {
             <EnrollButton
               object={course}
               enroll={enroll}
-              alreadyEnrolled={isEnrolled}
+              details={enrollDetails}
             />
           )}
           {canOperate && !course.isFinished && (
@@ -113,7 +122,7 @@ async function Content(params: { id: number }) {
         </Typography>
       </div>
 
-      <InstructorsList list={instructors} />
+      <InstructorsList list={instructors} ownerId={owner.id} />
       {canSeeResults && userInfo.finalFeedback && (
         <>
           <div className="mt-10">
@@ -141,7 +150,10 @@ type Instructors = z.infer<
   typeof api.course.getInfoOfUsersInCourse.schema.reply
 >
 
-function InstructorsList({ list }: { list: Instructors }) {
+function InstructorsList({
+  list,
+  ownerId,
+}: { list: Instructors; ownerId: number }) {
   return (
     <List className="w-fit">
       {list.map(({ user }, index) => {
@@ -150,7 +162,15 @@ function InstructorsList({ list }: { list: Instructors }) {
             {index !== 0 && <Divider variant="inset" component="li" />}
             <ListItem alignItems="flex-start">
               <ListItemAvatar>
-                <Avatar />
+                <Avatar
+                  sx={{
+                    bgcolor: deepPurple[500],
+                    border:
+                      user.id === ownerId
+                        ? `2px solid ${deepOrange[500]}`
+                        : undefined,
+                  }}
+                />
               </ListItemAvatar>
               <ListItemText
                 primary={`${user.firstName} ${user.lastName}`}
