@@ -75,7 +75,7 @@ export default function UserspaceLayout({
           />
         )}
         {permissions.navigation.enrolled && (
-          <EasyListItem text={'Enrolled'} icon={<Subscriptions />} />
+          <EasyListItem text={'Enrolled'} icon={<Subscriptions />} onClick={() => navigate('/enrolled')} />
         )}
         {permissions.navigation.templates && (
           <EasyListItem

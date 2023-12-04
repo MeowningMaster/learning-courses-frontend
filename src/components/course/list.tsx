@@ -91,3 +91,7 @@ export function TemplateCourseList({ list }: { list: List }) {
     />
   )
 }
+
+export function EnrolledCourseList({ list }: { list: Course[] }) {
+  return <CatalogCourseList list={list} />
+}

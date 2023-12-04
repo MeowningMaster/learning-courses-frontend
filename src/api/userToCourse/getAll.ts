@@ -3,16 +3,14 @@ import { Api, ApiSchema } from '../fetcher'
 
 export const schema = {
   params: z.object({
-    isFinished: z.boolean(),
+    isFinished: z.optional(z.boolean()),
   }),
   reply: z.array(
     z.object({
       id: z.number(),
-      mark: z.number(),
-      userId: z.number(),
-      courseId: z.number(),
-      finalFeedback: z.string().nullable(),
-      isPassed: z.boolean(),
+      title: z.string(),
+      description: z.string(),
+      isFinished: z.boolean(),
     }),
   ),
 } satisfies ApiSchema
