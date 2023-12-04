@@ -46,7 +46,7 @@ export const permissions: Permissions = {
     },
     course: {
       create: true,
-      enroll: false,
+      enroll: true,
       operate: true,
     },
     template: {

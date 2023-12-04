@@ -1,5 +1,6 @@
 import * as api from '@/api'
 import { DeleteButton } from '@/components/button/delete'
+import { EnrollButton } from '@/components/button/enroll'
 import { FinishButton } from '@/components/button/finish'
 import { CatalogChapterList } from '@/components/chapter/list'
 import { PageFallback } from '@/components/fallback/page'
@@ -44,24 +45,33 @@ async function finish({ id }: { id: number }) {
   redirect('/')
 }
 
+async function enroll({ id }: { id: number }) {
+  'use server'
+  await api.course.enroll.call({ params: { courseId: id }, canFail: true })
+}
+
 async function Content(params: { id: number }) {
   const id = Number(params.id)
-  const [course, chapters, instructors, owner] = await Promise.all([
+  const [course, chapters, instructors, owner, userInfo] = await Promise.all([
     api.course.get.call({ params: { courseId: id } }),
     api.course.getAllChaptersInCourse.call({ params: { courseId: id } }),
     api.course.getInfoOfUsersInCourse.call({
       params: { courseId: id, roleType: 'INSTRUCTOR' },
     }),
     api.course.getOwner.call({ params: { courseId: id } }),
+    api.userToCourse.get.call({ params: { courseId: id }, canFail: true }),
   ])
 
   const canOperate =
     getPermissions().course.operate &&
     (auth.getOrThrow().role === 'ADMIN' || owner.id === auth.getOrThrow().id)
 
+  const isEnrolled = userInfo !== undefined
+  const canEnroll = getPermissions().course.enroll
+
   return (
     <>
-      <div className="flex gap-4 justify-between">
+      <div className="flex gap-4 justify-between flex-wrap-reverse">
         <div className="flex gap-4">
           <Typography gutterBottom variant="h5" component="div">
             {course.title}
@@ -71,6 +81,13 @@ async function Content(params: { id: number }) {
           )}
         </div>
         <div className="flex gap-4">
+          {canEnroll && (
+            <EnrollButton
+              object={course}
+              enroll={enroll}
+              alreadyEnrolled={isEnrolled}
+            />
+          )}
           {canOperate && !course.isFinished && (
             <FinishButton object={course} finish={finish} />
           )}

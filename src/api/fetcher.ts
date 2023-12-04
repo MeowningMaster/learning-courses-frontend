@@ -19,6 +19,7 @@ type ApiOptions<Body extends z.ZodType, Params extends ParamsSchema> = {
   method?: Method
   params?: z.infer<Params>
   body?: z.infer<Body>
+  canFail?: boolean
 }
 
 type ParamsPrimitive = z.ZodString | z.ZodNumber | z.ZodBoolean
@@ -59,6 +60,10 @@ export async function fetchApi<
   })
 
   if (!reply.ok) {
+    if (options.canFail && reply.status >= 400 && reply.status < 500) {
+      return undefined
+    }
+
     throw new Error(reply.statusText)
   }
 
@@ -82,6 +87,7 @@ export function Api<
     localOptions: {
       body?: z.infer<Body>
       params?: z.infer<Params>
+      canFail?: boolean
     } = {},
   ) => await fetchApi(path, schema, { ...options, ...localOptions })
 }

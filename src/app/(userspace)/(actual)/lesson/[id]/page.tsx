@@ -32,7 +32,7 @@ async function Content(params: { id: number }) {
 
   return (
     <>
-      <div className="flex gap-4 justify-between">
+      <div className="flex gap-4 justify-between flex-wrap-reverse">
         <div className="flex gap-4">
           <Typography gutterBottom variant="h5" component="div">
             {lesson.title}
