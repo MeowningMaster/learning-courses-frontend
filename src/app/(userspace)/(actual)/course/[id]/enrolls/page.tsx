@@ -17,6 +17,7 @@ const reply: EnrollReply = async (enroll, action) => {
   'use server'
   await api.course.enrollReply.call({
     params: { enrollRequestId: enroll.id, isApproved: action === 'accept' },
+    canFail: true,
   })
 }
 
