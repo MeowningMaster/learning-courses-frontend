@@ -1,11 +1,27 @@
 import * as api from '@/api'
+import { enrollReply } from '@/api/course'
 import { FinishButton } from '@/components/button/finish'
 import { PageFallback } from '@/components/fallback/page'
 import { auth } from '@/utilities/auth'
 import { getPermissions } from '@/utilities/permissions'
-import { Button, Chip, Typography } from '@mui/material'
+import { userColorMap } from '@/utilities/user-color-map'
+import { Close, Done, FactCheck } from '@mui/icons-material'
+import {
+  Avatar,
+  Button,
+  Chip,
+  Divider,
+  IconButton,
+  ListItem,
+  ListItemAvatar,
+  ListItemButton,
+  ListItemText,
+  Typography,
+} from '@mui/material'
 import { redirect } from 'next/navigation'
-import { Suspense } from 'react'
+import { Fragment, Suspense } from 'react'
+import { z } from 'zod'
+import { SubmissionsList } from './submission/list'
 import { FileInfo, UploadForm } from './upload-form'
 
 export default function Page({ params }: { params: { id: string } }) {
@@ -37,7 +53,8 @@ async function Content(params: { id: number }) {
   ])
 
   const canOperate = getPermissions().course.operate
-  const canSubmitHomework = user.role === 'STUDENT' && !lesson.isFinished
+  const canSubmitHomework =
+    user.role === 'STUDENT' && markInfo && !lesson.isFinished
 
   async function submitHomework(data: FormData): Promise<FileInfo> {
     'use server'
@@ -58,16 +75,6 @@ async function Content(params: { id: number }) {
     'use server'
     await api.file.delete.call({ params: { lessonId: id, userId: user.id } })
   }
-
-  // async function downloadFile() {
-  //   'use server'
-  //   const blob: Blob = await api.file.download.call({
-  //     params: { lessonId: id, userId: user.id },
-  //   })
-  //   const formData = new FormData()
-  //   formData.append('file', blob)
-  //   return formData
-  // }
 
   return (
     <>
@@ -103,6 +110,57 @@ async function Content(params: { id: number }) {
           initialFile={initialFile}
           deleteFile={deleteFile}
           lessonId={id}
+        />
+      )}
+
+      <SubmissionsListWrapper lesson={lesson} />
+    </>
+  )
+}
+
+type Lesson = z.infer<typeof api['lesson']['get']['schema']['reply']>
+async function SubmissionsListWrapper({ lesson }: { lesson: Lesson }) {
+  const user = auth.getOrThrow()
+  if (user.role !== 'INSTRUCTOR') return
+
+  const instructors = await api.course.getInfoOfUsersInCourse.call({
+    params: { courseId: lesson.courseId, roleType: 'INSTRUCTOR' },
+  })
+  const isLocalInstructor = instructors.some(
+    ({ user: { id } }) => id === user.id,
+  )
+
+  if (!isLocalInstructor) return
+
+  const submissions = await api.userToLesson.homeworkSubmissions.call({
+    params: { lessonId: lesson.id },
+  })
+
+  const users = await Promise.all(
+    submissions.map((submission) =>
+      api.user.get.call({ params: { userId: submission.userId } }),
+    ),
+  )
+
+  return (
+    <>
+      <Typography
+        gutterBottom
+        variant="h5"
+        component="div"
+        sx={{ marginTop: '1rem' }}
+      >
+        Submissions
+      </Typography>
+      {submissions.length === 0 ? (
+        <Typography variant="body1" color="text.secondary">
+          There is no submissions yet 🙌
+        </Typography>
+      ) : (
+        <SubmissionsList
+          submissions={submissions}
+          users={users}
+          lessonId={lesson.id}
         />
       )}
     </>
