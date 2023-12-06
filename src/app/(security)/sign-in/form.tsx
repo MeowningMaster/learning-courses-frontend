@@ -1,17 +1,11 @@
-import { security } from '@/api'
-import { auth } from '@/utilities/auth'
+'use client'
+
 import { BoxProps, Button, TextField } from '@mui/material'
-import { redirect } from 'next/navigation'
+import { submitSignIn } from './submit'
 
 async function submit(data: FormData) {
-  'use server'
-
-  const dataObject = Object.fromEntries(data.entries())
-  const crendentials = security.signIn.schema.body.parse(dataObject)
-
-  const authData = await security.signIn.call({ body: crendentials })
-  auth.set(authData)
-  redirect('/')
+  const error = await submitSignIn(data)
+  if (error) alert(error)
 }
 
 export function LoginForm(props: BoxProps) {

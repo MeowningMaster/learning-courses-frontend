@@ -70,7 +70,17 @@ export function UploadForm({
             name="file"
             type="file"
             onChange={({ target }) => {
-              setFile({ name: target.files?.[0]?.name })
+              const file = target.files?.[0]
+              if (!file) return
+
+              const limit50mb = 50 * 1024 * 1024
+              if (file.size > limit50mb) {
+                alert('File size limit is 50MB')
+                target.value = ''
+                return
+              }
+
+              setFile({ name: file.name })
               setCanSubmit(true)
             }}
           />
