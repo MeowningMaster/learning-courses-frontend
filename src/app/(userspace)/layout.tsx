@@ -2,7 +2,7 @@
 
 import { getPermissions } from '@/utilities/permissions'
 import {
-  PersonAdd,
+  People,
   SnippetFolder,
   Subscriptions,
   TravelExplore,
@@ -86,11 +86,7 @@ export default function UserspaceLayout({
           />
         )}
         {permissions.instructor.create && (
-          <EasyListItem
-            text={'Instructor'}
-            icon={<PersonAdd />}
-            href="/create-instructor"
-          />
+          <EasyListItem text={'Users'} icon={<People />} href="/users" />
         )}
       </List>
     </div>

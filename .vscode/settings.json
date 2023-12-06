@@ -16,5 +16,9 @@
   "explorer.fileNesting.patterns": {
     "package.json": ".editorconfig, .pnpm*, pnpm*, biome.json, tsconfig.*, .npmrc, .gitignore, *.config.js, *.config.ts",
     ".env.local": ".env*"
-  }
+  },
+  // jsx
+  "editor.linkedEditing": true,
+  "javascript.preferences.renameMatchingJsxTags": true,
+  "typescript.preferences.renameMatchingJsxTags": true
 }

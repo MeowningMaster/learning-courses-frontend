@@ -6,7 +6,7 @@ export const schema = {
   body: z.object({
     // id: z.number(),
     login: z.string().email(),
-    password: z.string(),
+    password: z.optional(z.string()),
     firstName: z.string(),
     lastName: z.string(),
     role: userType,
