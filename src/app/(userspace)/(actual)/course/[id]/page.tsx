@@ -149,13 +149,17 @@ async function Content(params: { id: number }) {
           </div>
         </>
       )}
-      <div className="mt-10">
-        <Typography gutterBottom variant="h5" component="div">
-          Chapters
-        </Typography>
-      </div>
+      {(user.role !== 'STUDENT' || isEnrolled) && (
+        <>
+          <div className="mt-10">
+            <Typography gutterBottom variant="h5" component="div">
+              Chapters
+            </Typography>
+          </div>
 
-      <CatalogChapterList list={chapters} />
+          <CatalogChapterList list={chapters} />
+        </>
+      )}
     </>
   )
 }
