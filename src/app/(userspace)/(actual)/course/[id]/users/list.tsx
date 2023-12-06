@@ -49,7 +49,7 @@ export function EnrollsList({
               <IconButton
                 onClick={() => {
                   if (!confirm('Are you sure?')) return
-                  removeFront({ courseId, userId: user.id })
+                  removeFront({ courseId, userId: user.user.id })
                 }}
               >
                 <Delete color="error" />
