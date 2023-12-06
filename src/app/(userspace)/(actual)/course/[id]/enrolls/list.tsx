@@ -49,7 +49,6 @@ export function EnrollsList({
     <>
       {enrolls.map((enroll, index) => (
         <React.Fragment key={enroll.id}>
-          {index !== 0 && <Divider variant="inset" component="li" />}
           <ListItem alignItems="flex-start">
             <ListItemAvatar>
               <Avatar sx={{ bgcolor: userColorMap[enroll.user.role] }} />

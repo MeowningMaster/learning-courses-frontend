@@ -5,7 +5,7 @@ import { z } from 'zod'
 export const schema = {
   params: z.object({
     courseId: z.number(),
-    roleType: userType,
+    roleType: z.optional(userType),
   }),
   reply: z.array(
     z.object({

@@ -7,7 +7,7 @@ import { PageFallback } from '@/components/fallback/page'
 import { auth } from '@/utilities/auth'
 import { getPermissions } from '@/utilities/permissions'
 import { userColorMap } from '@/utilities/user-color-map'
-import { List as ListIcon } from '@mui/icons-material'
+import { List as ListIcon, People } from '@mui/icons-material'
 import {
   Avatar,
   Button,
@@ -102,6 +102,16 @@ async function Content(params: { id: number }) {
           )}
         </div>
         <div className="flex gap-4">
+          {canOperate && (
+            <Button
+              startIcon={<People />}
+              variant="outlined"
+              className="h-fit"
+              href={`${course.id}/users`}
+            >
+              Users
+            </Button>
+          )}
           {canOperate && !course.isFinished && (
             <Button
               startIcon={<ListIcon />}
