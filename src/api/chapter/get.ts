@@ -9,7 +9,7 @@ export const schema = {
     id: z.number(),
     title: z.string(),
     description: z.string(),
-    number: z.string(),
+    number: z.number(),
     courseId: z.number(),
     isFinished: z.boolean(),
   }),

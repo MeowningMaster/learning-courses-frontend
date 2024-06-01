@@ -34,8 +34,17 @@ export default function Page({
       </Typography>
       <form className="flex flex-col gap-4" action={submit}>
         <input type="hidden" name="chapterTemplateId" value={chapterId} />
-        <TextField name="title" label="Title" required />
-        <TextField name="description" label="Descrition" multiline />
+        <TextField name="title"
+                   label="Title"
+                   required
+                   InputProps={{inputProps: {minLength: 4, maxLength: 512}}}
+        />
+        <TextField name="description"
+                   label="Descrition"
+                   required
+                   multiline
+                   InputProps={{inputProps: {minLength: 4, maxLength: 2048}}}
+        />
         <TextField
           type="number"
           name="maxMark"

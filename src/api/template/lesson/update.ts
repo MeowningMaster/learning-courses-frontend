@@ -6,6 +6,7 @@ export const schema = {
     id: z.number(),
     title: z.string(),
     description: z.string(),
+    number: z.number(),
     maxMark: z.number(),
     successMark: z.number(),
   }),

@@ -13,6 +13,7 @@ async function submit(data: FormData) {
   dataObject.id = Number(dataObject.id)
   dataObject.maxMark = Number(dataObject.maxMark)
   dataObject.successMark = Number(dataObject.successMark)
+  dataObject.number = Number(dataObject.number)
   const lesson = template.lesson.update.schema.body.parse(dataObject)
 
   await template.lesson.update.call({
@@ -35,7 +36,8 @@ export default async function Page({
         Edit lesson template
       </Typography>
       <form className="flex flex-col gap-4" action={submit}>
-        <input type="hidden" name="id" value={lesson.id} />
+        <input type="hidden" name="id" value={lesson.id}/>
+        <input type="hidden" name="number" value={lesson.number}/>
         <TextField
           name="title"
           label="Title"
@@ -66,7 +68,7 @@ export default async function Page({
           type="submit"
           variant="contained"
           className="w-fit"
-          startIcon={<Save />}
+          startIcon={<Save/>}
         >
           Save
         </Button>

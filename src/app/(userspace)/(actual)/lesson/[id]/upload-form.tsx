@@ -14,11 +14,11 @@ type DeleteFile = () => Promise<void>
 type DownloadFile = () => Promise<unknown>
 
 export function UploadForm({
-  submit,
-  initialFile,
-  deleteFile,
-  lessonId,
-}: {
+                             submit,
+                             initialFile,
+                             deleteFile,
+                             lessonId,
+                           }: {
   submit: Submit
   lessonId: number
   initialFile?: FileInfo

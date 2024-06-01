@@ -5,6 +5,7 @@ export const schema = {
   body: z.object({
     id: z.number(),
     title: z.string(),
+    number: z.number(),
     description: z.string(),
   }),
   params: z.object({

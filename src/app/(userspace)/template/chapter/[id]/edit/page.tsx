@@ -11,6 +11,7 @@ async function submit(data: FormData) {
     unknown
   >
   dataObject.id = Number(dataObject.id)
+  dataObject.number = Number(dataObject.number)
   const chapter = template.chapter.update.schema.body.parse(dataObject)
 
   await template.chapter.update.call({
@@ -34,6 +35,7 @@ export default async function Page({
       </Typography>
       <form className="flex flex-col gap-4" action={submit}>
         <input type="hidden" name="id" value={chapter.id} />
+        <input type="hidden" name="number" value={chapter.number} />
         <TextField
           name="title"
           label="Title"

@@ -10,6 +10,7 @@ export const schema = {
       id: z.number(),
       mark: z.number(),
       userId: z.number(),
+      number: z.number(),
       lessonId: z.number(),
       isPassed: z.boolean(),
     }),

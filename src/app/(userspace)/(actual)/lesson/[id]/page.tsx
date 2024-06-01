@@ -1,23 +1,9 @@
 import * as api from '@/api'
-import { enrollReply } from '@/api/course'
 import { FinishButton } from '@/components/button/finish'
 import { PageFallback } from '@/components/fallback/page'
 import { auth } from '@/utilities/auth'
 import { getPermissions } from '@/utilities/permissions'
-import { userColorMap } from '@/utilities/user-color-map'
-import { Close, Done, FactCheck } from '@mui/icons-material'
-import {
-  Avatar,
-  Button,
-  Chip,
-  Divider,
-  IconButton,
-  ListItem,
-  ListItemAvatar,
-  ListItemButton,
-  ListItemText,
-  Typography,
-} from '@mui/material'
+import { Chip, Typography } from '@mui/material'
 import { redirect } from 'next/navigation'
 import { Fragment, Suspense } from 'react'
 import { z } from 'zod'
