@@ -20,7 +20,7 @@ type Props<T extends EnrollObject> = {
 
 export function EnrollButton<T extends EnrollObject>(props: Props<T>) {
   const [enrolled, setEnrolled] = React.useState<boolean | 'pending'>(
-    !props.details ? false : props.details.isApproved ? true : 'pending',
+    !props.details || !props.details.isActive && !props.details.isApproved? false : props.details.isActive ? true : 'pending',
   )
 
   if (enrolled === 'pending') {
