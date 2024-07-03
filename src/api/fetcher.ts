@@ -78,10 +78,19 @@ export async function fetchApi<
   }
 
   try {
-    if (schema.reply) {
-      const replyBody = await reply.json()
-      return schema.reply.parse(replyBody)
+    if (reply.headers.get('content-length') !== '0') {
+      const replyBody = await reply.json();
+      // @ts-ignore
+      return schema.reply.parse(replyBody);
+    } else {
+      console.warn('Received empty response body');
+      return null;
     }
+    // if (schema.reply) {
+    //   console.log('Response text:', reply);
+    //   const replyBody = await reply.json()
+    //   return schema.reply.parse(replyBody)
+    // }
     if (
       reply.headers.get('Content-Type')?.includes('application/octet-stream')
     ) {

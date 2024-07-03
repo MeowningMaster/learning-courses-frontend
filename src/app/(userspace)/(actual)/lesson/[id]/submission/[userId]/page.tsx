@@ -12,7 +12,7 @@ export default function Page({
 }
 
 import * as api from '@/api'
-import { Typography } from '@mui/material'
+import {Chip, Typography} from '@mui/material'
 import { DownloadButton } from './download-button'
 import { GradeForm } from './grade-form'
 
@@ -44,13 +44,18 @@ async function Content({
       <Typography variant="h5" component="div">
         {submitter.firstName}`s homework
       </Typography>
-      <DownloadButton
-        fileInfo={fileInfo}
-        lessonId={lessonId}
-        submitter={submitter}
-      />
+      <div className="mt-4 flex gap-4">
+        <Chip label={`Max mark: ${lesson.maxMark}`}/>
+        <Chip label={`Success mark: ${lesson.successMark}`}/>
+      </div>
+      {fileInfo && (
+        <DownloadButton
+          fileInfo={fileInfo}
+          lessonId={lessonId}
+          submitter={submitter}
+        />)}
       <GradeForm
-        gradeInfo={{ mark: gradeInfo.mark, maxMark: lesson.maxMark }}
+        gradeInfo={{mark: gradeInfo.mark, maxMark: lesson.maxMark}}
         grade={grade}
       />
     </>
